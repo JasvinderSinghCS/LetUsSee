@@ -1,4 +1,4 @@
-package com.prateek.springservice.service;
+package com.adqt.springservice.service;
 
 import com.adqt.springservice.entity.RuleValue;
 

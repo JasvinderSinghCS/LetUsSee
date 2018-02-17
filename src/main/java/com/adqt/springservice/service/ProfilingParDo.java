@@ -1,11 +1,9 @@
-package com.prateek.springservice.service;
+package com.adqt.springservice.service;
 
 import com.google.api.services.bigquery.model.TableRow;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollectionView;
-
-import javax.swing.text.TableView;
 
 public class ProfilingParDo extends DoFn<String, KV<String, String>> {
 

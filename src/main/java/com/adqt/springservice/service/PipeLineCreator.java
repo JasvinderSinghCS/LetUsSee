@@ -1,37 +1,26 @@
-package com.prateek.springservice.service;
+package com.adqt.springservice.service;
 
-import com.google.auth.Credentials;
-import com.google.auth.oauth2.ServiceAccountCredentials;
-import com.google.cloud.bigquery.BigQuery;
+import com.google.api.services.bigquery.model.TableFieldSchema;
+import com.google.api.services.bigquery.model.TableRow;
+import com.google.api.services.bigquery.model.TableSchema;
 import org.apache.beam.sdk.Pipeline;
-import org.apache.beam.sdk.PipelineResult;
 import org.apache.beam.sdk.coders.SerializableCoder;
 import org.apache.beam.sdk.io.gcp.bigquery.BigQueryIO;
+import org.apache.beam.sdk.io.gcp.pubsub.PubsubIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
-import org.apache.beam.sdk.transforms.Create;
-import org.apache.beam.sdk.transforms.ParDo;
-import org.apache.beam.sdk.transforms.View;
+import org.apache.beam.sdk.transforms.*;
+import org.apache.beam.sdk.transforms.windowing.SlidingWindows;
+import org.apache.beam.sdk.transforms.windowing.Window;
 import org.apache.beam.sdk.values.PCollectionView;
+import org.joda.time.Duration;
+import org.joda.time.Instant;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.beam.sdk.io.gcp.pubsub.PubsubIO;
-import org.apache.beam.sdk.transforms.DoFn;
-import org.apache.beam.sdk.transforms.Sum;
-import org.apache.beam.sdk.transforms.windowing.SlidingWindows;
-import org.apache.beam.sdk.transforms.windowing.Window;
-import org.joda.time.Duration;
-
-import com.google.api.services.bigquery.model.TableFieldSchema;
-import com.google.api.services.bigquery.model.TableRow;
-import com.google.api.services.bigquery.model.TableSchema;
-import org.joda.time.Instant;
-
 import java.util.HashSet;
+import java.util.List;
 
 public class PipeLineCreator {
 
@@ -83,7 +72,7 @@ public class PipeLineCreator {
 
         p.apply("GetMessages", PubsubIO.readStrings().fromTopic(topic)).apply("window", Window.into(SlidingWindows.of(Duration.standardMinutes(2)).every(Duration.standardSeconds(30))))
                 .apply("WordsPerLine", ParDo.of(new ProfilingParDo(transferContextView)).withSideInputs(transferContextView))
-                .apply("WordsInTimeWindow", Sum.integersGlobally().withoutDefaults()) //
+                .apply("WordsInTimeWindow", Sum.integersGlobally().withoutDefaults())
                 .apply("ToBQRow", ParDo.of(new DoFn<Integer, TableRow>() {
                     @ProcessElement
                     public void processElement(ProcessContext c) throws Exception {

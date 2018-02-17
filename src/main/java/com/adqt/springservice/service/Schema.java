@@ -1,8 +1,7 @@
-package com.prateek.springservice.service;
+package com.adqt.springservice.service;
 
 import com.adqt.springservice.entity.Column;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class Schema {

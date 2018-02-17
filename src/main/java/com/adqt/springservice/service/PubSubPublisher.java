@@ -26,8 +26,10 @@ public class PubSubPublisher {
             // Create a publisher instance with default settings bound to the topic
             publisher = Publisher.newBuilder(topicName).build();
             BufferedReader br = new BufferedReader(new FileReader(new File("/home/amitashukla0906/LetUsSee/let_us_see/src/main/java/templates/TataSteelDataSet.csv")));
-            for (int i = 0; i < 4500; i++) {
-                final String message = br.readLine();
+
+            String message;
+            for (;(message=br.readLine())!=null;) {
+                //final String message = br.readLine();
                 ByteString data = ByteString.copyFromUtf8(message);
                 PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
                 ApiFuture<String> future = publisher.publish(pubsubMessage);

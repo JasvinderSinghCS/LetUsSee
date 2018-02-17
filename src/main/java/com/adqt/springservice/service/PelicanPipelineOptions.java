@@ -1,4 +1,4 @@
-package com.prateek.springservice.service;
+package com.adqt.springservice.service;
 
 import org.apache.beam.sdk.extensions.gcp.options.GcsOptions;
 import org.apache.beam.sdk.options.Default;

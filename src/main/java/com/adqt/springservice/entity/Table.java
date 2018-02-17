@@ -1,9 +1,14 @@
 package com.adqt.springservice.entity;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 @javax.persistence.Table(name="table")
@@ -16,6 +21,9 @@ public class Table {
 	@javax.persistence.Column(name="table_name")
 	private String tableName;
 
+	@OneToMany(mappedBy="businessRule",orphanRemoval=true,cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private Set<Column> columns;
+	
 	public int getId() {
 		return id;
 	}
@@ -30,6 +38,14 @@ public class Table {
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+
+	public Set<Column> getColumns() {
+		return columns;
+	}
+
+	public void setColumns(Set<Column> columns) {
+		this.columns = columns;
 	}
 	
 }

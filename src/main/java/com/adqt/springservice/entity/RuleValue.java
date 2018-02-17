@@ -23,7 +23,7 @@ public class RuleValue {
 	private String dataType;
 	
 	@javax.persistence.Column(name="column_index")
-	private String columnIndex;
+	private int columnIndex;
 	
 	@javax.persistence.Column(name="rule_type")
 	private String ruleTypes;
@@ -56,6 +56,46 @@ public class RuleValue {
 
 	public void setRuleValue(String ruleValue) {
 		this.ruleValue = ruleValue;
+	}
+
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+
+	public int getColumnIndex() {
+		return columnIndex;
+	}
+
+	public void setColumnIndex(int columnIndex) {
+		this.columnIndex = columnIndex;
+	}
+
+	public String getRuleTypes() {
+		return ruleTypes;
+	}
+
+	public void setRuleTypes(String ruleTypes) {
+		this.ruleTypes = ruleTypes;
 	}
 
 }

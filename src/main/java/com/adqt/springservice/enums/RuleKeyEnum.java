@@ -4,7 +4,7 @@ public enum RuleKeyEnum {
 	
 	GREATER(1,"GREATER"),
 	SMALLER(2,"SMALLER"),
-	EQUALS(3,"EQUALS"),
+	EQUAL(3,"EQUAL"),
 	BETWEEN(4,"BETWEEN"),
 	IN(5,"IN"),
 	NOT_EQUAL(6,"NOT_EQUAL");
@@ -40,7 +40,7 @@ public enum RuleKeyEnum {
 		case "SMALLER":
 			return RuleKeyEnum.SMALLER;
 		case "EQUALS":
-			return RuleKeyEnum.EQUALS;
+			return RuleKeyEnum.EQUAL;
 		case "BETWEEN":
 			return RuleKeyEnum.BETWEEN;
 		case "IN":

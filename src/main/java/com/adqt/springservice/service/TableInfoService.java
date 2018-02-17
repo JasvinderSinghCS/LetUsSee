@@ -24,7 +24,7 @@ public class TableInfoService {
 		table.setTableName(tableInfoDTO.getTableName());
 		Set<Column> columns = new HashSet<Column>();
 		int index = 0;
-		for(ColumnInfoDTO columnDTO : tableInfoDTO.getColumnInfoList()) {
+		for (ColumnInfoDTO columnDTO : tableInfoDTO.getColumnInfoList()) {
 			Column column = new Column();
 			column.setColumnName(columnDTO.getColumnName());
 			column.setColumnIndex(index);
@@ -34,9 +34,7 @@ public class TableInfoService {
 		}
 		table.setColumns(columns);
 		tableRepository.save(table);
-		TableInfoDTO tableInfoDTOToReturn = getTableInfoToSend(table);
-		
-		return tableInfoDTOToReturn;
+		return getTableInfoToSend(table);
 	}
 
 	private TableInfoDTO getTableInfoToSend(Table table) {
@@ -44,10 +42,17 @@ public class TableInfoService {
 		tableInfoDTO.setTableId(table.getId());
 		tableInfoDTO.setTableName(table.getTableName());
 		Set<Column> columns = table.getColumns();
-		for(Column column : columns) {
-			
+		List<ColumnInfoDTO> columnInfoDTOList = new ArrayList<ColumnInfoDTO>();
+		for (Column column : columns) {
+			ColumnInfoDTO columnInfoDTO = new ColumnInfoDTO();
+			columnInfoDTO.setColumnId(column.getId());
+			columnInfoDTO.setColumnIndex(column.getColumnIndex());
+			columnInfoDTO.setColumnName(column.getColumnName());
+			columnInfoDTO.setDataType(column.getDataType());
+			columnInfoDTOList.add(columnInfoDTO);
 		}
-		return null;
+		tableInfoDTO.setColumnInfoList(columnInfoDTOList);
+		return tableInfoDTO;
 	}
-	
+
 }

@@ -1,5 +1,7 @@
 package com.adqt.springservice.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,20 +10,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.adqt.springservice.dto.TableInfoDTO;
-import com.adqt.springservice.service.TableInfoService;
+import com.adqt.springservice.dto.RuleValueDTO;
+import com.adqt.springservice.service.RuleValueService;
 
 @org.springframework.web.bind.annotation.RestController
-public class TableInfoController {
+public class RuleValueController {
 
 	@Autowired
-	TableInfoService tableInfoService;
+	private RuleValueService ruleValueService;
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/app/table", produces = MediaType.APPLICATION_JSON_VALUE)
-	public TableInfoDTO saveAndGetTable(@RequestBody TableInfoDTO tableInfoDTO) {
-		return tableInfoService.saveAndGetTable(tableInfoDTO);
+	@RequestMapping(method = RequestMethod.POST, value = "/app/ruleValue", produces = MediaType.APPLICATION_JSON_VALUE)
+	public void saveValue(@RequestBody List<RuleValueDTO> ruleValueDTOList) {
+		ruleValueService.saveValue(ruleValueDTOList);
 	}
+	
 	
 }

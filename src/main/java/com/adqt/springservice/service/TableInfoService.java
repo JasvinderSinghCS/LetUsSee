@@ -18,28 +18,6 @@ public class TableInfoService {
 
 	@Autowired
 	TableRepository tableRepository;
-	
-	public List<TableInfoDTO> getAllTables(){
-		List<Table> tables = tableRepository.findAll();
-		List<TableInfoDTO> tableInfoDtOList = new ArrayList<TableInfoDTO>();
-		for(Table table: tables) {
-			TableInfoDTO tableDTO = new TableInfoDTO();
-			tableDTO.setTableId(table.getId());
-			tableDTO.setTableName(table.getTableName());
-			List<ColumnInfoDTO> columnInfoDTOList = new ArrayList<ColumnInfoDTO>();
-			for(Column column : table.getColumns()) {
-				ColumnInfoDTO columnDTO = new ColumnInfoDTO();
-				columnDTO.setColumnIndex(column.getColumnIndex());
-				columnDTO.setColumnId(column.getId());
-				columnDTO.setColumnName(column.getColumnName());
-				columnDTO.setDataType(column.getDataType());
-				columnInfoDTOList.add(columnDTO);
-			}
-			tableDTO.setColumnInfoList(columnInfoDTOList);
-			tableInfoDtOList.add(tableDTO);
-		}
-		return tableInfoDtOList;
-	}
 
 	public TableInfoDTO saveAndGetTable(TableInfoDTO tableInfoDTO) {
 		Table table = new Table();
@@ -56,8 +34,20 @@ public class TableInfoService {
 		}
 		table.setColumns(columns);
 		tableRepository.save(table);
-		TableInfoDTO tableInfoDTOToReturn = new TableInfoDTO();
+		TableInfoDTO tableInfoDTOToReturn = getTableInfoToSend(table);
+		
 		return tableInfoDTOToReturn;
+	}
+
+	private TableInfoDTO getTableInfoToSend(Table table) {
+		TableInfoDTO tableInfoDTO = new TableInfoDTO();
+		tableInfoDTO.setTableId(table.getId());
+		tableInfoDTO.setTableName(table.getTableName());
+		Set<Column> columns = table.getColumns();
+		for(Column column : columns) {
+			
+		}
+		return null;
 	}
 	
 }

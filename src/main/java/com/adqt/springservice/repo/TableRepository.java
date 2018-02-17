@@ -8,9 +8,5 @@ import org.springframework.data.jpa.repository.Query;
 import com.adqt.springservice.entity.Table;
 
 public interface TableRepository extends JpaRepository<Table, Integer> {
-
-	@Query("select t from table t")
-	List<Table> findAll();
-
 	
 }

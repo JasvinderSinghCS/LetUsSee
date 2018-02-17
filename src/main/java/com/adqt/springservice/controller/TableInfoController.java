@@ -21,11 +21,6 @@ public class TableInfoController {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/api/tables", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<TableInfoDTO> getAllTables() {
-		return tableInfoService.getAllTables();
-	}
-	
 	@RequestMapping(method = RequestMethod.GET, value = "/api/table", produces = MediaType.APPLICATION_JSON_VALUE)
 	public TableInfoDTO saveAndGetTable(@RequestBody TableInfoDTO tableInfoDTO) {
 		return tableInfoService.saveAndGetTable(tableInfoDTO);

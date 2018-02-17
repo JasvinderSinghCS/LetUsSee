@@ -44,4 +44,28 @@ webApp.service('service', function($http,$q,$log,$rootScope){
         
         return deferred.promise
     };
+    
+    
+    /*Table Schema Config
+     * 
+     * */
+    
+    this.saveSchema = function(obj){
+        var deferred = $q.defer();
+        $http({
+            method:"GET", 
+            url:"/api/table",
+            data : obj
+            /*headers: {
+                Authorization: "Basic " + btoa(email + ":" + password)
+            }*/
+        }).
+        then(function(data,status,header,config){
+            deferred.resolve(data);
+        },function(error){
+        	 deferred.reject(error);
+        });
+        
+        return deferred.promise
+    };
 });

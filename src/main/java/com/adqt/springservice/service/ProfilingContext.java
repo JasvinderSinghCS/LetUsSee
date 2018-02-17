@@ -2,6 +2,7 @@ package com.adqt.springservice.service;
 
 import com.adqt.springservice.entity.RuleValue;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ProfilingContext {
@@ -38,4 +39,5 @@ public class ProfilingContext {
     public void setRules(List<RuleValue> rules) {
         this.rules = rules;
     }
+
 }

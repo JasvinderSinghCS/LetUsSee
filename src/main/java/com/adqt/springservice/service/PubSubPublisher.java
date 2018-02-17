@@ -28,7 +28,7 @@ public class PubSubPublisher {
             BufferedReader br = new BufferedReader(new FileReader(new File("/home/amitashukla0906/LetUsSee/let_us_see/src/main/java/templates/TataSteelDataSet.csv")));
 
             String message;
-            for (;(message=br.readLine())!=null;) {
+            for (; (message = br.readLine()) != null; ) {
                 //final String message = br.readLine();
                 ByteString data = ByteString.copyFromUtf8(message);
                 PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
@@ -48,7 +48,7 @@ public class PubSubPublisher {
                     @Override
                     public void onSuccess(String messageId) {
                         // Once published, returns server-assigned message ids (unique within the topic)
-                        System.out.println(message + " :"+ messageId);
+                        System.out.println(message + " :" + messageId);
                     }
                 });
             }

@@ -15,5 +15,6 @@ webApp.controller('profileController', function($scope,service, $location,$rootS
 
 	 if(null != localStorage.getItem("userId") && null != localStorage.getItem("userEmail")) {
 		 $rootScope.isLoggedIn = true;
+		 /*$location.path('/configureSchema').replace();*/
 	 }
 });

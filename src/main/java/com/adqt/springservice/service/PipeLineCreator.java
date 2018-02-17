@@ -71,14 +71,9 @@ public class PipeLineCreator {
         TableSchema bQSchema = new TableSchema().setFields(fields);
 
         ProfilingContext profilingContext = new ProfilingContext(tableName,schema,rules);
-        TupleTagList tupleTagList = TupleTagList.empty();
-        final TupleTag<TableRow> accuracyTag = new TupleTag<TableRow>(){};
-        final TupleTag<TableRow> completenessTag = new TupleTag<TableRow>(){};
-        final TupleTag<TableRow> conformityTag = new TupleTag<TableRow>(){};
-        final TupleTag<TableRow> consistencyTag = new TupleTag<TableRow>(){};
-
-        final PCollectionView<ProfilingContext> transferContextView = p.apply("DB Context SideInput", Create.of(profilingContext).withCoder(SerializableCoder.of(ProfilingContext.class))).apply(View.<ProfilingContext>asSingleton());
-
+        final PCollectionView<ProfilingContext> transferContextView = p
+                .apply("DB Context SideInput", Create.of(profilingContext).withCoder(SerializableCoder.of(ProfilingContext.class)))
+                .apply(View.<ProfilingContext>asSingleton());
         p.apply("GetMessages", PubsubIO.readStrings().fromTopic(topic))
         .apply("window", Window.into(SlidingWindows.of(Duration.standardMinutes(2)).every(Duration.standardSeconds(30))))
         .apply("ProfilingParDo", ParDo.of(new ProfilingParDo(transferContextView))

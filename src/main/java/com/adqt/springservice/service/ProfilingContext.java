@@ -2,10 +2,11 @@ package com.adqt.springservice.service;
 
 import com.adqt.springservice.entity.RuleValue;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProfilingContext {
+public class ProfilingContext implements Serializable {
     String tableName;
     Schema schema;
     List<RuleValue> rules;

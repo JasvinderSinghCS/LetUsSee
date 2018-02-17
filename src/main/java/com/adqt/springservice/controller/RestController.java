@@ -1,4 +1,4 @@
-package com.prateek.springservice.controller;
+package com.adqt.springservice.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.prateek.springservice.dto.UserDto;
-import com.prateek.springservice.exception.ApplicationRuntimeException;
-import com.prateek.springservice.service.Service;
-import com.prateek.springservice.utility.JsonResponse;
+import com.adqt.springservice.dto.UserDto;
+import com.adqt.springservice.exception.ApplicationRuntimeException;
+import com.adqt.springservice.service.Service;
+import com.adqt.springservice.utility.JsonResponse;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {

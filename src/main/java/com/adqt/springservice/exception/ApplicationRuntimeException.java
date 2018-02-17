@@ -1,4 +1,4 @@
-package com.prateek.springservice.exception;
+package com.adqt.springservice.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

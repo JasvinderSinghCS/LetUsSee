@@ -1,4 +1,4 @@
-package com.prateek.springservice.security;
+package com.adqt.springservice.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +7,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 
-import com.prateek.springservice.utility.ApplicationProperties;
+import com.adqt.springservice.utility.ApplicationProperties;
 
 @Configuration
 public class AuthenticationProviderConfig {

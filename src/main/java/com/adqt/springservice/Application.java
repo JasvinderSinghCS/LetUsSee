@@ -1,4 +1,4 @@
-package com.prateek.springservice;
+package com.adqt.springservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

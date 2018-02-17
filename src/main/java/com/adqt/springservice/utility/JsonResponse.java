@@ -1,4 +1,4 @@
-package com.prateek.springservice.utility;
+package com.adqt.springservice.utility;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

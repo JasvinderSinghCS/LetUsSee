@@ -1,12 +1,13 @@
-package com.prateek.springservice.service;
+package com.adqt.springservice.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.prateek.springservice.dto.UserDto;
-import com.prateek.springservice.entity.User;
-import com.prateek.springservice.exception.ApplicationRuntimeException;
-import com.prateek.springservice.repo.UserRepository;
-import com.prateek.springservice.utility.ApplicationUtility;
+
+import com.adqt.springservice.dto.UserDto;
+import com.adqt.springservice.entity.User;
+import com.adqt.springservice.exception.ApplicationRuntimeException;
+import com.adqt.springservice.repo.UserRepository;
+import com.adqt.springservice.utility.ApplicationUtility;
 
 /**
  * @author prateek.mishra

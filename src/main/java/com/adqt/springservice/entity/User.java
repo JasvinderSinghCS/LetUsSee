@@ -1,4 +1,4 @@
-package com.prateek.springservice.entity;
+package com.adqt.springservice.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

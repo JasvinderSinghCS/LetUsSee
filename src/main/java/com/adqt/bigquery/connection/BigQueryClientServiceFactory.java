@@ -1,4 +1,4 @@
-package com.letusssee.bigquery.connection;
+package com.adqt.bigquery.connection;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.adqt.PropertyFileReader;
 import com.google.api.services.bigquery.BigqueryScopes;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQueryOptions;
-import com.letusssee.PropertyFileReader;
 
 @Component
 public class BigQueryClientServiceFactory {

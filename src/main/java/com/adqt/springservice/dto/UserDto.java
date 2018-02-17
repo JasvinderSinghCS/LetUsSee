@@ -1,4 +1,4 @@
-package com.prateek.springservice.dto;
+package com.adqt.springservice.dto;
 
 import java.io.Serializable;
 

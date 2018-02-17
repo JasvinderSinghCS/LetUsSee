@@ -1,4 +1,4 @@
-package com.prateek.springservice.utility;
+package com.adqt.springservice.utility;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

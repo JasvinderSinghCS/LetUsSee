@@ -1,4 +1,4 @@
-package com.prateek.springservice.utility;
+package com.adqt.springservice.utility;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;

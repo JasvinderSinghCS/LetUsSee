@@ -16,7 +16,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class ProfilingParDo extends DoFn<String, KV<String, TableRow>> {
+
+public class ProfilingParDo extends DoFn<String, TableRow> {
 
     private final PCollectionView<ProfilingContext> profilingContext;
     final TupleTag<TableRow> accuracyTag = new TupleTag<TableRow>(){};
@@ -34,29 +35,31 @@ public class ProfilingParDo extends DoFn<String, KV<String, TableRow>> {
         String row = c.element();
         List<RuleValue> rules = localProfilingContext.getRules();
         String[] columns = row.split(",");
-        List<TableRow> Rows = new ArrayList<>();
+        TableRow tableRow = new TableRow();
         for (RuleValue rule : rules) {
-            TableRow tableRow = new TableRow();
             tableRow.set("tablename", localProfilingContext.getTableName());
-            tableRow.set("ruleType", rule.getRuleTypes());
             tableRow.set("row", rule.getRuleTypes());
             Column column = localProfilingContext.getSchema().getColumn(rule.getColumnIndex());
             Boolean status = true;
             String data = columns[rule.getColumnIndex()];
             if (rule.getRuleTypes().equalsIgnoreCase(RuleTypeEnum.ACCURACY.toString())) {
                 status = interpretAccuracyRule(data, rule.getRuleValue(), rule.getDataType(), rule.getRuleKey());
+                tableRow.set("accuracy", status);
             } else if (rule.getRuleTypes().equalsIgnoreCase(RuleTypeEnum.COMPLETNESS.toString())) {
+                tableRow.set("completeness", status);
                 status = interpretCompletenessRule(data, rule.getRuleKey());
             } else if (rule.getRuleTypes().equalsIgnoreCase(RuleTypeEnum.CONFORMITY.toString())) {
+                tableRow.set("conformity", status);
                 status = interpretConformityRule(data, rule.getRuleValue(), rule.getRuleKey());
             } else if (rule.getRuleTypes().equalsIgnoreCase(RuleTypeEnum.CONSISTENCY.toString())) {
+                tableRow.set("consistency", status);
                 status = interpretConsistencyRule(data, rule.getRuleValue(), rule.getRuleKey());
             }
-            tableRow.set("status",status);
-            Rows.add(tableRow);
         }
-        c.output();
+
+        c.output(tableRow);
 //        c.output(KV.of(localProfilingContext.getTableName(), Rows));
+
     }
 
     private Comparable castObject(String value, String dataType) {

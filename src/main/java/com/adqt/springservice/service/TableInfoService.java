@@ -41,7 +41,7 @@ public class TableInfoService {
 		return tableInfoDtOList;
 	}
 
-	public void saveTable(TableInfoDTO tableInfoDTO) {
+	public TableInfoDTO saveAndGetTable(TableInfoDTO tableInfoDTO) {
 		Table table = new Table();
 		table.setTableName(tableInfoDTO.getTableName());
 		Set<Column> columns = new HashSet<Column>();
@@ -56,6 +56,8 @@ public class TableInfoService {
 		}
 		table.setColumns(columns);
 		tableRepository.save(table);
+		TableInfoDTO tableInfoDTOToReturn = new TableInfoDTO();
+		return tableInfoDTOToReturn;
 	}
 	
 }

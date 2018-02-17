@@ -27,8 +27,8 @@ public class TableInfoController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/api/table", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void saveTable(@RequestBody TableInfoDTO tableInfoDTO) {
-		tableInfoService.saveTable(tableInfoDTO);
+	public TableInfoDTO saveAndGetTable(@RequestBody TableInfoDTO tableInfoDTO) {
+		return tableInfoService.saveAndGetTable(tableInfoDTO);
 	}
 	
 }

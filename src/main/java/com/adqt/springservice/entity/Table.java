@@ -21,7 +21,7 @@ public class Table {
 	@javax.persistence.Column(name="table_name")
 	private String tableName;
 
-	@OneToMany(mappedBy="businessRule",orphanRemoval=true,cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="table",orphanRemoval=true,cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private Set<Column> columns;
 	
 	public int getId() {

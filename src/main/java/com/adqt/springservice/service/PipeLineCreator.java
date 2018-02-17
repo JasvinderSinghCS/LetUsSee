@@ -1,9 +1,11 @@
 package com.adqt.springservice.service;
 
+import com.adqt.springservice.entity.RuleValue;
 import com.google.api.services.bigquery.model.TableFieldSchema;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.api.services.bigquery.model.TableSchema;
 import org.apache.beam.sdk.Pipeline;
+import org.apache.beam.sdk.PipelineResult;
 import org.apache.beam.sdk.coders.SerializableCoder;
 import org.apache.beam.sdk.io.gcp.bigquery.BigQueryIO;
 import org.apache.beam.sdk.io.gcp.pubsub.PubsubIO;
@@ -24,7 +26,7 @@ import java.util.List;
 
 public class PipeLineCreator {
 
-    public void preProcess() throws FileNotFoundException {
+    public void preProcess(String tableName, Schema schema, List<RuleValue> rules) throws FileNotFoundException {
         //PelicanCluster targetCluster = getTargetCluster();
         String[] args = new String[10];
         args[0] = prepareArgument("tempLocation", "gs://gcp-data-engineer-188205/staging");
@@ -58,61 +60,20 @@ public class PipeLineCreator {
 
         // INitialise the context
 
-        // Build the table schema for the output table.
+        // Build the table bQSchema for the output table.
         List<TableFieldSchema> fields = new ArrayList<>();
         fields.add(new TableFieldSchema().setName("tablename").setType("STRING"));
-        fields.add(new TableFieldSchema().setName("columnName").setType("STRING"));
         fields.add(new TableFieldSchema().setName("ruleType").setType("STRING"));
         fields.add(new TableFieldSchema().setName("Status").setType("BOOL"));
         fields.add(new TableFieldSchema().setName("row").setType("STRING"));
-        TableSchema schema = new TableSchema().setFields(fields);
+        TableSchema bQSchema = new TableSchema().setFields(fields);
 
-        ProfilingContext profilingContext = new ProfilingContext();
+        ProfilingContext profilingContext = new ProfilingContext(tableName,schema,rules);
         final PCollectionView<ProfilingContext> transferContextView = p.apply("DB Context SideInput", Create.of(profilingContext).withCoder(SerializableCoder.of(ProfilingContext.class))).apply(View.<ProfilingContext>asSingleton());
 
         p.apply("GetMessages", PubsubIO.readStrings().fromTopic(topic)).apply("window", Window.into(SlidingWindows.of(Duration.standardMinutes(2)).every(Duration.standardSeconds(30))))
-                .apply("WordsPerLine", ParDo.of(new ProfilingParDo(transferContextView)).withSideInputs(transferContextView))
-                .apply("WordsInTimeWindow", Sum.integersGlobally().withoutDefaults())
-                .apply("ToBQRow", ParDo.of(new DoFn<Integer, TableRow>() {
-                    @ProcessElement
-                    public void processElement(ProcessContext c) throws Exception {
-                        TableRow row = new TableRow();
-                        row.set("timestamp", Instant.now().toString());
-                        row.set("num_words", c.element());
-                        c.output(row);
-                    }
-                })) //
-                .apply(BigQueryIO.writeTableRows().to(output)//
-                        .withSchema(schema)//
-                        .withWriteDisposition(BigQueryIO.Write.WriteDisposition.WRITE_APPEND)
-                        .withCreateDisposition(BigQueryIO.Write.CreateDisposition.CREATE_IF_NEEDED));
-        p.run();
-        /*BigQueryClientConfig config = new BigQueryClientConfig(propertyFileReader.getBigQueryConnectTimeoutmili(),
-                propertyFileReader.getBigQueryReadTimeoutMili(), propertyFileReader.getBigQueryRetrySetMaxAttempts(),
-                propertyFileReader.getBigQueryMaxRetryDelayMili(), propertyFileReader.getBigQueryRetryTotalTimeoutMili(),
-                propertyFileReader.getBigQueryInitialRetryDelayMili(), propertyFileReader.getBigQueryRetryDelayMultiplier(),
-                propertyFileReader.getBigQueryInitialRpcTimeout(), propertyFileReader.getBigQueryRpcTimeoutMultiplier(),
-                propertyFileReader.getBigQueryMaxRpcTimeout());
-        Credentials credentials = ServiceAccountCredentials.fromStream(serviceAccountStream).createScoped(scopeSet);
-        BigQuery bigQuery = createBigQueryClient(credentials, options.getProject(), config);
-        for (final PipelineTableInfo info : infoObjects) {
-            final String tableName = info.getOutputTableName();
-            final String tgtDbName = info.getOutputDbName();
-            doCleanUp(bigQuery, tgtDbName, tableName);
-        }
-        options.setGcpCredential(credentials);
-        Pipeline pipeline = Pipeline.create(options);
-        final PCollectionView<List<PipelineTableInfo>> tableInfoView = pipeline.apply("Table Info SideInput", Create.of(infoObjects).withCoder(SerializableCoder.of(PipelineTableInfo.class))).apply(View.<PipelineTableInfo>asList());
-        final PCollectionView<ProfilingContext> transferContextView = pipeline.apply("DB Context SideInput", Create.of(transferContext).withCoder(SerializableCoder.of(ProfilingContext.class))).apply(View.<ProfilingContext>asSingleton());
-        pipeline.begin().apply("Begin Transfer", Create.of("seed"))
-                .apply("Prepare Transfer", ParDo.of(new TransferCommandHolderDoFn(tableInfoView)).withSideInputs(tableInfoView))
-                .apply("Data Transfer", ParDo.of(new DataTransferTransform(transferContextView)).withSideInputs(transferContextView));
-        return pipeline.run().waitUntilFinish();
-        if (!infoObjects.isEmpty()) {
-            ProfilingContext profilingContext = new ProfilingContext();
-            PipelineResult.State result = PipelineLauncher.launch(args, infoObjects, propertyFileReader, profilingContext);
-            transferResult.setStatus(PipelineResult.State.DONE == result);
-            transferResult.setDescription("Data transfer successful.");*/
+                .apply("ProfilingParDo", ParDo.of(new ProfilingParDo(transferContextView)).withSideInputs(transferContextView)).apply(BigQueryIO.writeTableRows().to(output).withSchema(bQSchema).withWriteDisposition(BigQueryIO.Write.WriteDisposition.WRITE_APPEND).withCreateDisposition(BigQueryIO.Write.CreateDisposition.CREATE_IF_NEEDED));
+        PipelineResult pipelineResult = p.run();
         }
 
     private String prepareArgument(String fieldName, String fieldValue) {

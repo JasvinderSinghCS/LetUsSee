@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @javax.persistence.Table(name="rule_value")
@@ -82,11 +83,13 @@ public class RuleValue {
 		this.dataType = dataType;
 	}
 
+
 	public int getColumnIndex() {
 		return columnIndex;
 	}
 
 	public void setColumnIndex(int columnIndex) {
+
 		this.columnIndex = columnIndex;
 	}
 

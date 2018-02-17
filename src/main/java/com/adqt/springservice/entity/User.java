@@ -6,11 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-/**
- * Spring Entity Class : auto generate using generate ddl as true, or run the SQL Scripts in resource folder
- * @author prateek.mishra
- *
- */
+
 @Entity
 @Table(name="user_details")
 public class User {
@@ -80,6 +76,10 @@ public class User {
 		this.password = password;
 	}
 
-
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", companyName=" + companyName + ", email=" + email + ", password="
+				+ password + "]";
+	}
 	
 }

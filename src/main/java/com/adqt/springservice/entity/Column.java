@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @javax.persistence.Table(name="column")
@@ -22,9 +24,10 @@ public class Column {
 	@javax.persistence.Column(name="column_index")
 	private int columnIndex;
 	
-	@javax.persistence.Column(name="table_id")
-	private int tableId;
-
+	@ManyToOne
+	@JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
+	private Table table;
+	
 	public int getId() {
 		return id;
 	}
@@ -57,12 +60,12 @@ public class Column {
 		this.columnIndex = columnIndex;
 	}
 
-	public int getTableId() {
-		return tableId;
+	public Table getTable() {
+		return table;
 	}
 
-	public void setTableId(int tableId) {
-		this.tableId = tableId;
+	public void setTable(Table table) {
+		this.table = table;
 	}
-	
+
 }

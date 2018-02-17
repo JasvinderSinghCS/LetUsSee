@@ -31,7 +31,27 @@ public class PropertyFileReader {
 	
 	@Value("${OAuthServiceAcctEmail}")
 	private volatile String OAuthServiceAcctEmail;
-	
+
+	@Value("${tempLocation}")
+	private volatile String tempLocation;
+
+	@Value("${stagingLocation}")
+	private volatile String stagingLocation;
+
+	@Value("${runner}")
+	private volatile String runner;
+
+	@Value("${zone}")
+	private volatile String zone;
+
+	@Value("${topic}")
+	private volatile String topic;
+
+	@Value("${outputTable}")
+	private volatile String outputBQTable;
+
+
+
 
 	public String getDataStoreHost() {
 		return dataStoreHost;
@@ -72,6 +92,52 @@ public class PropertyFileReader {
 	public void setOAuthServiceAcctEmail(String oAuthServiceAcctEmail) {
 		OAuthServiceAcctEmail = oAuthServiceAcctEmail;
 	}
-	
 
+	public String getTempLocation() {
+		return tempLocation;
+	}
+
+	public void setTempLocation(String tempLocation) {
+		this.tempLocation = tempLocation;
+	}
+
+	public String getStagingLocation() {
+		return stagingLocation;
+	}
+
+	public void setStagingLocation(String stagingLocation) {
+		this.stagingLocation = stagingLocation;
+	}
+
+	public String getRunner() {
+		return runner;
+	}
+
+	public void setRunner(String runner) {
+		this.runner = runner;
+	}
+
+	public String getZone() {
+		return zone;
+	}
+
+	public void setZone(String zone) {
+		this.zone = zone;
+	}
+
+	public String getTopic() {
+		return topic;
+	}
+
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
+	public String getOutputBQTable() {
+		return outputBQTable;
+	}
+
+	public void setOutputBQTable(String outputBQTable) {
+		this.outputBQTable = outputBQTable;
+	}
 }

@@ -1,5 +1,6 @@
 package com.adqt.springservice.service;
 
+import com.adqt.PropertyFileReader;
 import com.adqt.springservice.entity.RuleValue;
 import com.google.api.services.bigquery.model.TableFieldSchema;
 import com.google.api.services.bigquery.model.TableRow;
@@ -18,6 +19,7 @@ import org.apache.beam.sdk.values.PCollectionView;
 import org.apache.beam.sdk.values.TupleTagList;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,24 +30,25 @@ import java.util.List;
 
 public class PipeLineCreator {
 
+    @Autowired
+    PropertyFileReader propertyFileReader;
+
     public void preProcess(String tableName, Schema schema, List<RuleValue> rules) throws FileNotFoundException {
         //PelicanCluster targetCluster = getTargetCluster();
         String[] args = new String[10];
-        args[0] = prepareArgument("tempLocation", "gs://gcp-data-engineer-188205/staging");
-        args[1] = prepareArgument("runner", "DataflowRunner");
-        args[2] = prepareArgument("project", "gcp-data-engineer-188205");
-        args[3] = prepareArgument("stagingLocation", "gs://gcp-data-engineer-188205/staging");
-        args[4] = prepareArgument("credentialPath", "C:\\Users\\jasvindersingh.chugh\\Documents\\My Received Files\\gcp-data-engineer-6f56a059b541.json");
+        args[0] = prepareArgument("tempLocation", propertyFileReader.getTempLocation());
+        args[1] = prepareArgument("runner", propertyFileReader.getRunner());
+        args[2] = prepareArgument("project", propertyFileReader.getProjectId());
+        args[3] = prepareArgument("stagingLocation", propertyFileReader.getStagingLocation());
+        args[4] = prepareArgument("credentialPath", propertyFileReader.getOAuthPvtKeyPath());
         args[5] = prepareArgument("streaming", "true");
-        args[6] = prepareArgument("zone", "");
+        args[6] = prepareArgument("zone", propertyFileReader.getZone());
         args[7] = prepareArgument("autoscalingAlgorithm", "NONE");
    /* args[8] = prepareArgument("numWorkers", ""+(Math.min(maxPipelineWorkers, Math.max(infoObjects.size()/8, minPipelineWorkers))));
     args[9] = prepareArgument("maxNumWorkers", ""+maxPipelineWorkers);*/
         final PelicanPipelineOptions options = PipelineOptionsFactory.fromArgs(args).as(PelicanPipelineOptions.class);
 
         PipelineOptionsFactory.register(PelicanPipelineOptions.class);
-        File credentialsPath = new File("C:\\Users\\jasvindersingh.chugh\\Documents\\My Received Files\\gcp-data-engineer-6f56a059b541.json");
-        FileInputStream serviceAccountStream = new FileInputStream(credentialsPath);
 
         HashSet<String> scopeSet = new HashSet<>();
         scopeSet.add("https://www.googleapis.com/auth/cloud-platform");
@@ -57,20 +60,23 @@ public class PipeLineCreator {
         Pipeline p = Pipeline.create(options);
 
         // Hardcoded Topic value
-        String topic = "stock_tata_steel";
-        String output = "let_us_see.ProfilingResult";
+        String topic = propertyFileReader.getTopic();
+        String output = propertyFileReader.getOutputBQTable();
 
         // INitialise the context
 
         // Build the table bQSchema for the output table.
         List<TableFieldSchema> fields = new ArrayList<>();
         fields.add(new TableFieldSchema().setName("tablename").setType("STRING"));
-        fields.add(new TableFieldSchema().setName("ruleType").setType("STRING"));
-        fields.add(new TableFieldSchema().setName("status").setType("BOOL"));
+        fields.add(new TableFieldSchema().setName("accuracy").setType("BOOL"));
+        fields.add(new TableFieldSchema().setName("completeness").setType("BOOL"));
+        fields.add(new TableFieldSchema().setName("conformity").setType("BOOL"));
+        fields.add(new TableFieldSchema().setName("consistency").setType("BOOL"));
         fields.add(new TableFieldSchema().setName("row").setType("STRING"));
         TableSchema bQSchema = new TableSchema().setFields(fields);
 
         ProfilingContext profilingContext = new ProfilingContext(tableName,schema,rules);
+
         final PCollectionView<ProfilingContext> transferContextView = p
                 .apply("DB Context SideInput", Create.of(profilingContext).withCoder(SerializableCoder.of(ProfilingContext.class)))
                 .apply(View.<ProfilingContext>asSingleton());
@@ -83,6 +89,7 @@ public class PipeLineCreator {
           .withSchema(bQSchema)
           .withWriteDisposition(BigQueryIO.Write.WriteDisposition.WRITE_APPEND)
           .withCreateDisposition(BigQueryIO.Write.CreateDisposition.CREATE_IF_NEEDED));
+
         PipelineResult pipelineResult = p.run();
         }
 

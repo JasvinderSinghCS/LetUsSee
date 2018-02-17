@@ -23,11 +23,13 @@
 <script src="js/angular-material-1.1.1/angular-material.js"></script>
 
 <!-- Controllers -->
+
 <script src="js/MainController.js"></script>
 <script src="js/loginController.js"></script>
 <script src="js/signupController.js"></script>
 <script src="js/profileController.js"></script>
 <script src="js/aboutController.js"></script>
+<script src="js/configureSchema.js"></script>
 
 
 <!-- Service -->
@@ -48,6 +50,7 @@ Let Us See
 		<ul class="nav navbar-nav">
 			<li><a ng-click="login()" ng-show="!isLoggedIn">Login</a></li>
 			<li><a ng-click="home()" ng-show="isLoggedIn">Home</a></li>
+			<li><a ng-click="configure()" ng-show="isLoggedIn">Configure</a></li>
 			<li><a ng-click="about();">About</a></li>
 			<li><a ng-click="logout()" ng-show="isLoggedIn">Logout</a></li>
 		</ul>

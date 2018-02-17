@@ -13,11 +13,17 @@ webApp.config(function ($routeProvider) {
          templateUrl: 'views/signup.html',
          controllerAs: 'vm'
      })
+     .when('/configure', {
+         controller: 'configureSchema',
+         templateUrl: 'views/configureDashboard.html',
+         controllerAs: 'vm'
+     })
      .when('/profile', {
          controller: 'profileController',
          templateUrl: 'views/profile.html',
          controllerAs: 'vm'
      })
+      
      .when('/about', {
          controller: 'aboutController',
          templateUrl: 'views/about.html',

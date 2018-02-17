@@ -19,4 +19,10 @@ webApp.controller('MainController', function($scope, $location,$rootScope) {
 	$scope.home = function() {
 		$location.path('/profile').replace();
 	}
+	
+	$scope.configure = function() {
+		$location.path('/configure').replace();
+	}
+	
+	
 });

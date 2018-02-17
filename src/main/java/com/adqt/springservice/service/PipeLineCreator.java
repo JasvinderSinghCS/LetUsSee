@@ -4,6 +4,7 @@ import com.adqt.springservice.entity.RuleValue;
 import com.google.api.services.bigquery.model.TableFieldSchema;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.api.services.bigquery.model.TableSchema;
+import com.google.cloud.dataflow.sdk.values.TupleTag;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
 import org.apache.beam.sdk.coders.SerializableCoder;
@@ -14,6 +15,7 @@ import org.apache.beam.sdk.transforms.*;
 import org.apache.beam.sdk.transforms.windowing.SlidingWindows;
 import org.apache.beam.sdk.transforms.windowing.Window;
 import org.apache.beam.sdk.values.PCollectionView;
+import org.apache.beam.sdk.values.TupleTagList;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 
@@ -64,15 +66,28 @@ public class PipeLineCreator {
         List<TableFieldSchema> fields = new ArrayList<>();
         fields.add(new TableFieldSchema().setName("tablename").setType("STRING"));
         fields.add(new TableFieldSchema().setName("ruleType").setType("STRING"));
-        fields.add(new TableFieldSchema().setName("Status").setType("BOOL"));
+        fields.add(new TableFieldSchema().setName("status").setType("BOOL"));
         fields.add(new TableFieldSchema().setName("row").setType("STRING"));
         TableSchema bQSchema = new TableSchema().setFields(fields);
 
         ProfilingContext profilingContext = new ProfilingContext(tableName,schema,rules);
+        TupleTagList tupleTagList = TupleTagList.empty();
+        final TupleTag<TableRow> accuracyTag = new TupleTag<TableRow>(){};
+        final TupleTag<TableRow> completenessTag = new TupleTag<TableRow>(){};
+        final TupleTag<TableRow> conformityTag = new TupleTag<TableRow>(){};
+        final TupleTag<TableRow> consistencyTag = new TupleTag<TableRow>(){};
+
         final PCollectionView<ProfilingContext> transferContextView = p.apply("DB Context SideInput", Create.of(profilingContext).withCoder(SerializableCoder.of(ProfilingContext.class))).apply(View.<ProfilingContext>asSingleton());
 
-        p.apply("GetMessages", PubsubIO.readStrings().fromTopic(topic)).apply("window", Window.into(SlidingWindows.of(Duration.standardMinutes(2)).every(Duration.standardSeconds(30))))
-                .apply("ProfilingParDo", ParDo.of(new ProfilingParDo(transferContextView)).withSideInputs(transferContextView)).apply(BigQueryIO.writeTableRows().to(output).withSchema(bQSchema).withWriteDisposition(BigQueryIO.Write.WriteDisposition.WRITE_APPEND).withCreateDisposition(BigQueryIO.Write.CreateDisposition.CREATE_IF_NEEDED));
+        p.apply("GetMessages", PubsubIO.readStrings().fromTopic(topic))
+        .apply("window", Window.into(SlidingWindows.of(Duration.standardMinutes(2)).every(Duration.standardSeconds(30))))
+        .apply("ProfilingParDo", ParDo.of(new ProfilingParDo(transferContextView))
+        .withSideInputs(transferContextView))
+        .apply(BigQueryIO.writeTableRows()
+          .to(output)
+          .withSchema(bQSchema)
+          .withWriteDisposition(BigQueryIO.Write.WriteDisposition.WRITE_APPEND)
+          .withCreateDisposition(BigQueryIO.Write.CreateDisposition.CREATE_IF_NEEDED));
         PipelineResult pipelineResult = p.run();
         }
 

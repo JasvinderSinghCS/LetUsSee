@@ -13,7 +13,6 @@ import com.adqt.springservice.entity.Column;
 import com.adqt.springservice.entity.RuleValue;
 import com.adqt.springservice.entity.Table;
 import com.adqt.springservice.enums.RuleKeyEnum;
-import com.adqt.springservice.enums.RuleTypeEnum;
 import com.adqt.springservice.repo.ColumnRepository;
 import com.adqt.springservice.repo.RuleValueRepository;
 import com.adqt.springservice.repo.TableRepository;
@@ -70,7 +69,11 @@ public class RuleValueService {
 			index = ruleExpression.toUpperCase().indexOf("TO") + 2;
 		} else if (ruleExpression.toUpperCase().startsWith(RuleKeyEnum.IN.getRuleKey())) {
 			ruleKeyValueMap.put("ruleKey", RuleKeyEnum.IN.getRuleKey());
-			index = 3;
+			index = ruleExpression.toUpperCase().indexOf("(") + 1;
+			int endIndex = ruleExpression.length()-1;
+			ruleValue = ruleExpression.substring(index,endIndex).trim();
+			ruleKeyValueMap.put("ruleValue", ruleValue);
+			return ruleKeyValueMap;
 		} else if (ruleExpression.toUpperCase().startsWith(RuleKeyEnum.NOT_EQUAL.getRuleKey())) {
 			ruleKeyValueMap.put("ruleKey", RuleKeyEnum.NOT_EQUAL.getRuleKey());
 			index = ruleExpression.toUpperCase().indexOf("TO") + 2;

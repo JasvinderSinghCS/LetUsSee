@@ -47,5 +47,10 @@ public class Table {
 	public void setColumns(Set<Column> columns) {
 		this.columns = columns;
 	}
+
+	@Override
+	public String toString() {
+		return "Table [id=" + id + ", tableName=" + tableName + ", columns=" + columns + "]";
+	}
 	
 }

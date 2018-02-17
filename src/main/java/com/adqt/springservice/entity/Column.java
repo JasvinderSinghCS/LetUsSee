@@ -68,4 +68,10 @@ public class Column {
 		this.table = table;
 	}
 
+	@Override
+	public String toString() {
+		return "Column [id=" + id + ", columnName=" + columnName + ", dataType=" + dataType + ", columnIndex="
+				+ columnIndex + ", table=" + table + "]";
+	}
+
 }

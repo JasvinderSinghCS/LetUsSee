@@ -1,4 +1,4 @@
-package com.prateek.springservice.service;
+package com.adqt.springservice.service;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
@@ -38,8 +38,7 @@ public class PubSubPublisher {
                         if (throwable instanceof ApiException) {
                             ApiException apiException = ((ApiException) throwable);
                             // details on the API exception
-                            System.out.println(apiException.getStatusCode().getCode());
-                            System.out.println(apiException.isRetryable());
+                            System.out.println(apiException.getMessage());
                         }
                         System.out.println("Error publishing message : " + message);
                     }

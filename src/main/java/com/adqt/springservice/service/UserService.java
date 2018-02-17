@@ -14,7 +14,7 @@ import com.adqt.springservice.utility.ApplicationUtility;
  * Service class performaing actual CRUD operations
  */
 @org.springframework.stereotype.Service
-public class Service {
+public class UserService {
 	
 	@Autowired
 	private UserRepository userRepo;

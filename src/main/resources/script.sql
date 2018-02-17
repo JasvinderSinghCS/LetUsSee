@@ -1,6 +1,11 @@
+DROP SCHEMA IF EXISTS `let_us_see`;
+
 CREATE SCHEMA `let_us_see`;
 
 USE SCHEMA `le_us_see`;
+
+
+DROP TABLE IF EXISTS `user_details`;
 
 CREATE TABLE IF NOT EXISTS `user_details` (
 	`id` int(10) NOT NULL AUTO_INCREMENT,
@@ -12,17 +17,24 @@ CREATE TABLE IF NOT EXISTS `user_details` (
 	UNIQUE KEY `email` (`email`)
 );
 
+DROP TABLE IF EXISTS `column`;
+
 CREATE TABLE IF NOT  EXISTS `column`(
 	`id` int(10) PRIMARY KEY AUTO_INCREMENT,
+	`table_id` int(10) NOT NULL,
 	`column_name` varchar(250) NOT NULL,
 	`data_type`  varchar(250) NOT NULL,
     `column_index` int
 );
 
+DROP TABLE IF EXISTS `table`;
+
 CREATE TABLE IF NOT EXISTS `table`(
 	`id` int(10) PRIMARY KEY AUTO_INCREMENT,
 	`table_name` varchar(250) NOT NULL
 );
+
+DROP TABLE IF EXISTS `rule_vale`;
 
 CREATE TABLE IF NOT EXISTS `rule_vale`(
 	`id` int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -34,5 +46,4 @@ CREATE TABLE IF NOT EXISTS `rule_vale`(
 	`rule_key` varchar(250) NOT NULL,
 	`rule_value` varchar(250) NOT NULL
 );
-
-
+	

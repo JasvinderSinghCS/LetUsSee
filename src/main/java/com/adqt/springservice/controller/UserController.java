@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.adqt.springservice.dto.UserDto;
 import com.adqt.springservice.exception.ApplicationRuntimeException;
-import com.adqt.springservice.service.Service;
+import com.adqt.springservice.service.UserService;
 import com.adqt.springservice.utility.JsonResponse;
 
 @org.springframework.web.bind.annotation.RestController
-public class RestController {
+public class UserController {
 
 	@Autowired
-	private Service service;
+	private UserService userService;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/api/user/{userId}/profile", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?>  getProfileForUser(@PathVariable Integer userId) {
 		log.info("Rest to fetch profile with user id {} ",userId);
-		UserDto dto  = service.getUserDto(userId);
+		UserDto dto  = userService.getUserDto(userId);
 		if(null != dto) {
 			log.info("User Fetched successfully");
 			return new ResponseEntity<UserDto>(dto, HttpStatus.OK);	
@@ -41,7 +41,7 @@ public class RestController {
 		
 		try {
 			log.info("Rest for signing up new User");
-			String response = service.signUpNewUser(user);
+			String response = userService.signUpNewUser(user);
 			return new ResponseEntity<JsonResponse>(new JsonResponse(response), HttpStatus.OK);
 		} catch (ApplicationRuntimeException e) {
 			log.error("ApplicationRuntimeException occurred : {} ",e.getMessage(),e);
@@ -58,7 +58,7 @@ public class RestController {
 		
 		try {
 			log.info("Rest to validate user");
-			UserDto dto = service.isUserCredentialValid(input);
+			UserDto dto = userService.isUserCredentialValid(input);
 			return new ResponseEntity<UserDto>(dto, HttpStatus.OK);
 		} catch (ApplicationRuntimeException e) {
 			log.error("ApplicationRuntimeException occurred : {} ",e.getMessage(),e);

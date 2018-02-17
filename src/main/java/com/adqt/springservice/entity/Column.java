@@ -21,6 +21,9 @@ public class Column {
 	
 	@javax.persistence.Column(name="column_index")
 	private int columnIndex;
+	
+	@javax.persistence.Column(name="table_id")
+	private int tableId;
 
 	public int getId() {
 		return id;
@@ -52,6 +55,14 @@ public class Column {
 
 	public void setColumnIndex(int columnIndex) {
 		this.columnIndex = columnIndex;
+	}
+
+	public int getTableId() {
+		return tableId;
+	}
+
+	public void setTableId(int tableId) {
+		this.tableId = tableId;
 	}
 	
 }

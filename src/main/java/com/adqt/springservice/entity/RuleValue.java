@@ -4,10 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
 @javax.persistence.Table(name="rule_value")
-public class RuleValue {
+public class RuleValue implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

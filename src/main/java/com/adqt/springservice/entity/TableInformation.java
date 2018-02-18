@@ -16,6 +16,7 @@ public class TableInformation {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@javax.persistence.Column(name="id")
 	private int id;
 	
 	@javax.persistence.Column(name="table_name")

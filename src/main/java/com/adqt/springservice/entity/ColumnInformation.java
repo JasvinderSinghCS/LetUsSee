@@ -13,6 +13,7 @@ public class ColumnInformation {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@javax.persistence.Column(name="id")
 	private int id;
 	
 	@javax.persistence.Column(name="column_name",nullable=false)

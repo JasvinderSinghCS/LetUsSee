@@ -35,10 +35,10 @@ public class TableInfoService {
 			column.setColumnName(columnDTO.getColumnName());
 			column.setColumnIndex(index);
 			column.setDataType(columnDTO.getDataType());
+			column.setTableInformation(table);
 			columns.add(column);
 		}
 		table.setColumnInformations(columns);
-		log.info("trying to save table : {}",table);
 		tableRepository.save(table);
 		return getTableInfoToSend(table);
 	}

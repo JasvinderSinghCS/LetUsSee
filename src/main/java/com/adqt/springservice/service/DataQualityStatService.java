@@ -152,7 +152,7 @@ public class DataQualityStatService {
 	public void launchDataCompletenss(String tableName, BigQuery bigQueryClient) throws Exception {
 		String query = "select count(1) as row_count,completeness from `let_us_see.ProfilingResult` group by tablename,completeness";
 
-		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(true).build();
+		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
 		while (true) {
 			Thread.sleep(30000);
 			
@@ -171,7 +171,7 @@ public class DataQualityStatService {
 			for(FieldValueList fieldValueList : queryResult.iterateAll()) {
 				FieldValue fieldValueRowCount = fieldValueList.get("row_count");
 				long rowCount = fieldValueRowCount.getLongValue();
-				FieldValue fieldValueAccuracy = fieldValueList.get("completness");
+				FieldValue fieldValueAccuracy = fieldValueList.get("completeness");
 				boolean status = fieldValueAccuracy.getBooleanValue();
 				countMap.put(status,rowCount);
 			}
@@ -203,7 +203,7 @@ public class DataQualityStatService {
 	public void launchDataConformity(String tableName, BigQuery bigQueryClient) throws Exception {
 		String query = "select count(1) as row_count,conformity from `let_us_see.ProfilingResult` group by tablename,conformity";
 
-		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(true).build();
+		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
 		while (true) {
 			Thread.sleep(30000);
 			
@@ -253,7 +253,7 @@ public class DataQualityStatService {
 
 	public void launchDataConsistency(String tableName, BigQuery bigQueryClient) throws Exception {
 		String query = "select count(1) as row_count,consistency from `let_us_see.ProfilingResult` group by tablename,consistency";
-		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(true).build();
+		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
 		while (true) {
 			Thread.sleep(30000);
 			

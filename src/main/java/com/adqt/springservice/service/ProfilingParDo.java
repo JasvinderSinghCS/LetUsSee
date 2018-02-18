@@ -38,6 +38,7 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
         TableRow tableRow = new TableRow();
         tableRow.set("tablename", localProfilingContext.getTableName());
         tableRow.set("row", row);
+        log.info("Row processing started {} with rule : {}",row,rules);
         Boolean accStatus = true, conformStatus = true, completenessStatus=true, consistencyStatus=true;
         for (RuleValue rule : rules) {
             log.info("Row processing started {} with rule {}",row,rule);
@@ -67,6 +68,7 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
                 case "string":
                     return value;
                 case "integer":
+                    log.info("value : {}     datatype : {}",value,dataType);
                     return Integer.parseInt(value);
                 case "float":
                     return Float.parseFloat(value);

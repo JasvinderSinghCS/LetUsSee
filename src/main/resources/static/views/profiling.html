@@ -1,0 +1,52 @@
+<div class="black-background">
+	<div layout="row" style="width:100%;">
+		<span style="color:white;font-size:16px;padding:5px">Schema Name</span>	
+		<span style="color:white;font-size:16px;padding:5px;color:gray">{{selectedTable}}</span>	
+		
+		<div style="padding-top:10px;float:right">
+		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('advance')" ng-class="{'selected-tab':selectedTab =='advance'}">Advance Data Profiling</span>
+		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('heatmap');rerender()" ng-class="{'selected-tab':selectedTab =='heatmap'}">Heat Map Metrics</span>
+		</div>	
+	</div>
+	
+	
+</div>
+
+<div ng-show="selectedTab =='advance'">
+
+</div>
+
+<div style="position: absolute;top: 40%;width: 80%;height: 100%;left: 10%;" ng-show="selectedTab =='heatmap'">
+
+	<div style="padding:100px;position:relative">
+		<div class="treemap"></div>
+	</div>
+	
+</div>
+
+<style>
+.black-background{
+	background-color: #000000f5;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.selected-tab{
+	    background-color: #469e508f !important;
+}
+
+.treemap .node {
+  font-size: 250%;
+  line-height: 150%;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 1%;
+  transition: background 1s;
+  transition: color 0.5s;
+}
+.treemap .node:hover {
+  background: grey !important;
+  color: white;
+}
+</style>

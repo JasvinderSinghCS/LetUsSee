@@ -53,7 +53,7 @@ webApp.service('service', function($http,$q,$log,$rootScope){
     this.saveSchema = function(obj){
         var deferred = $q.defer();
         $http({
-            method:"GET", 
+            method:"POST", 
             url:"/api/table",
             data : obj
             /*headers: {

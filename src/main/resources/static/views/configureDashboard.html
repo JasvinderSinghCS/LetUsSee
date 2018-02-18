@@ -4,17 +4,18 @@
     <!-- progressbar -->
     <ul id="progressbar">
       <li style="padding-left:100px;" class="active">Schema Setup</li>
-      <li style="padding-left:100px;" ng-class="{'active':!firstpage}">Rule Mapping</li>
+      <li style="padding-left:100px;" ng-class="{'active':pageNumber >= 2}">Rule Mapping</li>
+      <li style="padding-left:100px;" ng-class="{'active':pageNumber == 3}">Start Profiling</li>
     </ul>
     <!-- fieldsets -->
-    <fieldset ng-show="firstpage">
+    <fieldset ng-show="pageNumber == 1">
       <h2 class="fs-title">Create Schema</h2>
       <h3 class="fs-subtitle">This is step 1</h3>
       <input type="text" name="email" placeholder="Table Name" ng-model="tableSchema.tableName"/>
      
      <div layout="row">
-     <span title="add column" style="float:right" ng-click="addNewColumns(tableSchema.columns)"><i class="fa fa-2x fa-plus-square add-columns"></i></span>
-     	<div style="float:left;width:100%" ng-repeat="col in tableSchema.columns">
+     <span title="add column" style="float:right" ng-click="addNewColumns(tableSchema.columnInfoList)"><i class="fa fa-2x fa-plus-square add-columns"></i></span>
+     	<div style="float:left;width:100%" ng-repeat="col in tableSchema.columnInfoList">
       		<input  style="width:50%;padding:5px" type="text" ng-model="col.columnName" name="columnName" placeholder="Column Name" />
       		<select style="padding:5px" ng-model="col.dataType"
               ng-options="opt as opt for opt in supportedDataType">
@@ -22,10 +23,10 @@
           	
       	</div>
       </div>
-      <input type="button" name="next" class="next action-button" value="Next" ng-click="savetableSchema(tableSchema)"/>
+      <input type="button" name="next" class="next action-button" value="Next" ng-click="saveNewSchema(tableSchema)"/>
     </fieldset>
 
-    <fieldset ng-show="!firstpage">
+    <fieldset ng-show="pageNumber == 2">
       <h2 class="fs-title">Rule Mapping</h2>
       <h3 class="fs-subtitle"><span style="color:gray;font-weight:bold;padding:2px">Table Name:</span>{{tableSchema.tableName}}</h3>
       <!-- <input type="text" name="fname" placeholder="First Name" />
@@ -37,7 +38,7 @@
       <div style="float:left;width:100%" ng-repeat="rule in ruleMappingList">
 
       		<select  style="width:30%;padding:5px" ng-model="rule.columnId"
-              ng-options="opt as opt.columnName for opt in tableSchema.columns">
+              ng-options="opt as opt.columnId for opt in recievedSchema.columnInfoList">
           	</select>
           	
           	<select  style="width:30%;padding:5px" ng-model="rule.ruleType"
@@ -47,8 +48,15 @@
       		<input style="width:30%;padding:5px" type="text" ng-model="rule.ruleExpresion" name="ruleExpresion" placeholder="Rule NLP Expresion" />
           	
       	</div>
-      		<input type="button" name="previous" class="previous action-button" value="Previous" ng-click="visitFirst()" />
-      		<input type="submit" name="submit" class="submit action-button" value="Submit" />
+      		<input type="button" name="previous" class="previous action-button" value="Previous" ng-click="visitPrevious()" />
+      		<input type="submit" name="submit" class="submit action-button" value="Next" ng-click="visitNext();"/>
+    </fieldset>
+    
+    <fieldset ng-show="pageNumber == 3">
+      <h2 class="fs-title">Start Profiling</h2>
+      <h3 class="fs-subtitle"><span style="color:gray;font-weight:bold;padding:2px">Table Name:</span>{{tableSchema.tableName}}</h3>
+      <img src="../images/start-profiling.gif" width="350" height="300"/>
+      <input type="submit" style="width:200px" name="submit" class="submit action-button" value="Start Profiling" />
     </fieldset>
   </div>
 </form>
@@ -152,16 +160,16 @@
 
 
 #progressbar li:before {
-  content: counter(step);
-  counter-increment: step;
-  width: 20px;
-  line-height: 20px;
-  display: block;
-  font-size: 15px;
-  color: #333;
-  background: white;
-  border-radius: 3px;
-  margin: 0 auto 5px auto;
+    content: counter(step);
+    counter-increment: step;
+    width: 50px;
+    line-height: 50px;
+    display: block;
+    font-size: 15px;
+    color: #333;
+    background: white;
+    border-radius: 30px;
+    margin: 0 auto 5px auto;
 }
 
 #progressbar li:first-child:after {
@@ -198,7 +206,7 @@
     .shaded-background{
     width: 100%;
     height: 100%;
-    background: #8e99a27a;
-    padding: 10px;
+    background: #1a1e217a;;
+    padding: 25px;
     }
 </style>

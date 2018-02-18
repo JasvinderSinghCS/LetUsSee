@@ -1,16 +1,17 @@
 
 <div ng-show="profilingTableName">
 <div class="black-background">
-	<div ng-if="profilingTableName" layout="row" style="width:100%;">
-		<span style="color:white;font-size:16px;padding:5px"><img src="../images/table.png" width="20px" height="20px"/></span>	
-		<span style="color:white;font-size:16px;padding:5px;color:white">{{profilingTableName}}</span>	
-		
+	<div ng-if="profilingTableName" layout="row" style="width:100%;margin-top:10px">
+		<span style="color:white;font-size:16px;padding:10px;border:2px solid white;background-color:black;background-color: #3e3e40;;">
+				<span style="color:white;font-size:16px;"><img src="../images/table.png" width="20px" height="20px"/></span>	
+				<span style="color:white;font-size:16px;color:white">{{profilingTableName}}</span>	
+		</span>
 		<div style="padding-top:10px;float:right">
-		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('advance');rerenderHighchart()" ng-class="{'selected-tab':selectedTab =='advance'}">Advance Data Profiling</span>
-		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('heatmap');rerender()" ng-class="{'selected-tab':selectedTab =='heatmap'}">Heat Map Metrics</span>
+		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('advance');rerenderHighchart()" ng-class="{'selected-tab':selectedTab =='advance'}">Count View</span>
+		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('heatmap');rerender()" ng-class="{'selected-tab':selectedTab =='heatmap'}">Percentage View</span>
 		</div>	
 		<div>
-			<div ng-if="socketConnected" style="color:white;">
+			<div ng-if="socketConnected" style="color:white;padding-top:10px">
 				<div id="circle"><span style="padding:25px">Connected</span></div>
 			</div>
 		</div>
@@ -19,7 +20,7 @@
 	
 </div>
 
-<div style="position:absolute;top:100px;left:150px" ng-show="selectedTab =='advance'">
+<div style="position:absolute;top:100px;left:140px" ng-show="selectedTab =='advance'">
 	<div class="col-md-12">
 	<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
 		<div id="container"></div>
@@ -44,14 +45,35 @@
 	
 </div>
 
-<div style="position: absolute;top: 20%;width: 80%;height: 100%;left: 10%;" ng-show="selectedTab =='heatmap'">
+<div style="position:absolute;top:100px;left:140px" ng-show="selectedTab =='heatmap'">
 
-	<div style="padding-left:50px;padding-bottom:30px">
-		<span style="padding:10px"><img src="../images/metric.png" width="45" height="45"></span>
+	<!-- <div style="padding-left:50px;padding-bottom:30px">
 		<span style="font-size:18px;color:white">Data Quality Metrics Heat Map</span>
 	</div>
 	<div style="padding:100px;position:relative">
 		<div class="treemap"></div>
+	</div> -->
+	
+	<div class="col-md-12">
+	<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
+		<div id="container_per"></div>
+	</div>
+	
+	<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
+		<div id="consistency_per"></div>
+	</div>
+	
+	
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
+			<div id="conformity_per"></div>
+		</div>
+	
+		<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
+			<div id="completness_per"></div>
+		</div>
+	
 	</div>
 </div>
 </div>
@@ -61,7 +83,7 @@
 </div>
 <style>
 .black-background{
-	background-color: #0e0e0e9e;;
+	background-color: #0e0e0e4f;
     width: 100%;
     height: 100%;
     position: absolute;

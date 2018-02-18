@@ -18,12 +18,10 @@ $rootScope.selectedLink ="profiling";
 			            text: 'Data Accuracy',
 			            x: -20 //center
 			        },
-			        xAxis: {
-			            categories: ['Jan', 'Feb', 'Mar']
-			        },
+			       
 			        yAxis: {
 			            title: {
-			                text: 'Percentage'
+			                text: 'Count'
 			            },
 			            plotLines: [{
 			                value: 0,
@@ -41,8 +39,11 @@ $rootScope.selectedLink ="profiling";
 			            borderWidth: 0
 			        },
 			        series: [{
-			            name: 'Tokyo',
+			            name: 'Total Count',
 			            data: [7.0, 6.9, 9.5]
+			        },{
+			            name: 'Final Count',
+			            data: [10.0, 5.9, 0.5]
 			        }]
 			});
 	}
@@ -55,12 +56,10 @@ $rootScope.selectedLink ="profiling";
 			            text: 'Data Conformity',
 			            x: -20 //center
 			        },
-			        xAxis: {
-			            categories: ['Jan', 'Feb', 'Mar']
-			        },
+			        
 			        yAxis: {
 			            title: {
-			                text: 'Percentage'
+			                text: 'Count'
 			            },
 			            plotLines: [{
 			                value: 0,
@@ -78,8 +77,11 @@ $rootScope.selectedLink ="profiling";
 			            borderWidth: 0
 			        },
 			        series: [{
-			            name: 'Tokyo',
+			            name: 'Total Count',
 			            data: [7.0, 6.9, 9.5]
+			        },{
+			            name: 'Final Count',
+			            data: [10.0, 5.9, 0.5]
 			        }]
 			});
 	}
@@ -93,12 +95,10 @@ $rootScope.selectedLink ="profiling";
 			            text: 'Data Consistency',
 			            x: -20 //center
 			        },
-			        xAxis: {
-			            categories: ['Jan', 'Feb', 'Mar']
-			        },
+			        
 			        yAxis: {
 			            title: {
-			                text: 'Percentage'
+			                text: 'Count'
 			            },
 			            plotLines: [{
 			                value: 0,
@@ -116,8 +116,11 @@ $rootScope.selectedLink ="profiling";
 			            borderWidth: 0
 			        },
 			        series: [{
-			            name: 'Tokyo',
+			            name: 'Total Count',
 			            data: [7.0, 6.9, 9.5]
+			        },{
+			            name: 'Final Count',
+			            data: [10.0, 5.9, 0.5]
 			        }]
 			});
 	}
@@ -130,9 +133,50 @@ $rootScope.selectedLink ="profiling";
 			            text: 'Data Completness',
 			            x: -20 //center
 			        },
-			        xAxis: {
-			            categories: ['Jan', 'Feb', 'Mar']
+			        
+			        yAxis: {
+			            title: {
+			                text: 'Count'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
 			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Total Count',
+			            data: [7.0, 6.9, 9.5]
+			        },{
+			            name: 'Final Count',
+			            data: [10.0, 5.9, 0.5]
+			        }]
+			});
+	}
+	
+	
+	
+	
+	
+	
+var renderHighChartAccuracyPer = function(){
+		
+		Highcharts.chart('container_per', {
+
+			  title: {
+			            text: 'Data Accuracy',
+			            x: -20 //center
+			        },
+			       
 			        yAxis: {
 			            title: {
 			                text: 'Percentage'
@@ -153,7 +197,113 @@ $rootScope.selectedLink ="profiling";
 			            borderWidth: 0
 			        },
 			        series: [{
-			            name: 'Tokyo',
+			            name: 'Percentage',
+			            data: [7.0, 6.9, 9.5]
+			        }]
+			});
+	}
+	
+	var renderHighChartConformityPer = function(){
+		
+		Highcharts.chart('conformity_per', {
+
+			  title: {
+			            text: 'Data Conformity',
+			            x: -20 //center
+			        },
+			       
+			        yAxis: {
+			            title: {
+			                text: 'Percentage'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Percentage',
+			            data: [7.0, 6.9, 9.5]
+			        }]
+			});
+	}
+
+	
+	var renderHighChartConsistencyPer = function(){
+		
+		Highcharts.chart('consistency_per', {
+
+			  title: {
+			            text: 'Data Consistency',
+			            x: -20 //center
+			        },
+			       
+			        yAxis: {
+			            title: {
+			                text: 'Percentage'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Percentage',
+			            data: [7.0, 6.9, 9.5]
+			        }]
+			});
+	}
+
+	var renderHighChartCompletnessPer = function(){
+		
+		Highcharts.chart('completness_per', {
+
+			  title: {
+			            text: 'Data Completness',
+			            x: -20 //center
+			        },
+			        
+			        yAxis: {
+			            title: {
+			                text: 'Percentage'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Percentage',
 			            data: [7.0, 6.9, 9.5]
 			        }]
 			});
@@ -214,8 +364,16 @@ $rootScope.selectedLink ="profiling";
 	
 	render();
 	
-	$scope.rerender =function(){
-		render();
+	$scope.rerenderPer =function(){
+		renderHighChartCompletnessPer();
+		renderHighChartConformityPer();
+		renderHighChartAccuracyPer();
+		renderHighChartConsistencyPer();
+	}
+	
+	$scope.rerender = function(){
+		setTimeout($scope.rerenderPer(),1000);
+		setTimeout($scope.rerenderPer(),5000);
 	}
 	
 	$scope.rerenderHighchart =function(){

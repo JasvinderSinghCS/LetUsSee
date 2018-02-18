@@ -1,7 +1,6 @@
 webApp.controller('configureSchema', function($scope,service, $location,$rootScope,service) {
 	
 	$rootScope.selectedLink ="configure";
-	  
 	  $scope.pageNumber = 1;
 	  $scope.visitNext = function(){
 		  $scope.pageNumber += 1;
@@ -78,10 +77,13 @@ webApp.controller('configureSchema', function($scope,service, $location,$rootSco
 	  }
 
 	  $scope.startProfiling=function(tableName){
-		  service.startProfiling(tableName).then(function(data){
+		  service.startProfiling(tableName.tableName).then(function(data){
+			  $rootScope.profilingTableName = tableName.tableName;
 			  $location.path('/profiling').replace();
+			  
 		  },function(error){
 			  $location.path('/profiling').replace();
+			  $rootScope.profilingTableName = tableName.tableName;
 		  })
 	  }
 });

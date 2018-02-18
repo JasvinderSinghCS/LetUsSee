@@ -226,8 +226,11 @@ $rootScope.selectedLink ="profiling";
 		
 	}
 	
-	setTimeout($scope.rerenderHighchart(),1000);
-	setTimeout($scope.rerenderHighchart(),5000);
+	if($rootScope.profilingTableName){
+		setTimeout($scope.rerenderHighchart(),1000);
+		setTimeout($scope.rerenderHighchart(),5000);
+	}
+	
 	
 	
 	

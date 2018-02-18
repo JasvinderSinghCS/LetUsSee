@@ -38,35 +38,27 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
         TableRow tableRow = new TableRow();
         tableRow.set("tablename", localProfilingContext.getTableName());
         tableRow.set("row", row);
-        tableRow.set("accuracy", true);
-        tableRow.set("completeness", true);
-        tableRow.set("conformity", true);
-        tableRow.set("consistency", true);
+        Boolean accStatus = true, conformStatus = true, completenessStatus=true, consistencyStatus=true;
         for (RuleValue rule : rules) {
             log.info("Row processing started {} with rule {}",row,rule);
             ColumnInformation column = localProfilingContext.getSchema().getColumn(rule.getColumnIndex());
-            Boolean status = true;
             String data = columns[rule.getColumnIndex()];
             if (RuleTypeEnum.ACCURACY.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                status = interpretAccuracyRule(data, rule.getRuleValue(), rule.getDataType(), rule.getRuleKey());
-                tableRow.set("accuracy", status);
+                accStatus = interpretAccuracyRule(data, rule.getRuleValue(), rule.getDataType(), rule.getRuleKey());
             } else if (RuleTypeEnum.COMPLETNESS.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                status = interpretCompletenessRule(data, rule.getRuleKey());
-                tableRow.set("completeness", status);
+                completenessStatus = interpretCompletenessRule(data, rule.getRuleKey());
             } else if (RuleTypeEnum.CONFORMITY.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                status = interpretConformityRule(data, rule.getRuleValue(), rule.getRuleKey());
-                tableRow.set("conformity", status);
+                conformStatus = interpretConformityRule(data, rule.getRuleValue(), rule.getRuleKey());
             } else if (RuleTypeEnum.CONSISTENCY.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                status = interpretConsistencyRule(data, rule.getRuleValue(), rule.getRuleKey());
-                tableRow.set("consistency", status);
+                consistencyStatus = interpretConsistencyRule(data, rule.getRuleValue(), rule.getRuleKey());
             }
         }
-
+        tableRow.set("accuracy", accStatus);
+        tableRow.set("completeness", completenessStatus);
+        tableRow.set("conformity", conformStatus);
+        tableRow.set("consistency", consistencyStatus);
         log.info("@@@@ TABLE ROW @@@@"+tableRow);
-
         c.output(tableRow);
-//        c.output(KV.of(localProfilingContext.getTableName(), Rows));
-
     }
 
     private Comparable castObject(String value, String dataType) {
@@ -119,13 +111,13 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
         Comparable dataCom = castObject(data,dataType);
         if(dataCom==null) return false;
         if(rule.toUpperCase().trim().equals("GREATER")) {
-            Comparable ruleValCom = castObject(data, dataType);
+            Comparable ruleValCom = castObject(ruleValue, dataType);
             return dataCom.compareTo(ruleValCom) > 0;
         }else if(rule.toUpperCase().trim().equals("SMALLER")) {
-            Comparable ruleValCom = castObject(data, dataType);
+            Comparable ruleValCom = castObject(ruleValue, dataType);
             return dataCom.compareTo(ruleValCom) < 0;
         }else if(rule.toUpperCase().trim().equals("EQUAL")) {
-            Comparable ruleValCom = castObject(data, dataType);
+            Comparable ruleValCom = castObject(ruleValue, dataType);
             return dataCom.compareTo(ruleValCom) == 0;
         }else if(rule.toUpperCase().trim().equals("BETWEEN")) {
             String[] range = ruleValue.split(",");

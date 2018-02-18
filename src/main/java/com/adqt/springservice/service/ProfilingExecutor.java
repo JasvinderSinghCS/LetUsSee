@@ -1,19 +1,17 @@
 package com.adqt.springservice.service;
 
-import com.adqt.springservice.entity.ColumnInformation;
-import com.adqt.springservice.entity.RuleValue;
-import com.adqt.springservice.entity.TableInformation;
-import com.adqt.springservice.repo.ColumnRepository;
-import com.adqt.springservice.repo.RuleValueRepository;
-import com.adqt.springservice.repo.TableRepository;
+import java.io.IOException;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
+import com.adqt.springservice.entity.RuleValue;
+import com.adqt.springservice.entity.TableInformation;
+import com.adqt.springservice.repo.RuleValueRepository;
+import com.adqt.springservice.repo.TableRepository;
 
 @Service
 public class ProfilingExecutor {
@@ -39,6 +37,6 @@ public class ProfilingExecutor {
         List<RuleValue> rules = ruleValueRepository.findByTableName(tableName);
         Schema schema = new Schema(table.getColumnInformations());
         dataQualityStatService.lauchDataQuality(tableName);
-        //pipeLineCreator.preProcess(tableName,schema,rules);
+        pipeLineCreator.preProcess(tableName,schema,rules);
     }
 }

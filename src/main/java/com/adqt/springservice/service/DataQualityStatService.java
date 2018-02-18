@@ -53,8 +53,8 @@ public class DataQualityStatService {
 			threadPoolProvider.execute(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					launchDataAccuracy(tableName,bigQueryClient);
+				try {		
+			launchDataAccuracy(tableName,bigQueryClient);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -95,14 +95,18 @@ public class DataQualityStatService {
 	public void launchDataAccuracy(final String tableName,final BigQuery bigQueryClient) throws Exception {
 		log.info("fetch Accuracy count ");
 		String query = "select count(1) as row_count,accuracy from `let_us_see.ProfilingResult` group by tablename,accuracy";
-		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(true).build();
+		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
 		while (true) {
 			Thread.sleep(30000);
 			log.info("new thread fetching count of accuracy");
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 			JobId jobId = JobId.of(UUID.randomUUID().toString());
-			Job queryJob = bigQueryClient.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
-			
+			Job queryJob = null;
+			try {
+			queryJob = bigQueryClient.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
+			}catch(RuntimeException r) {	
+				log.error("error : {}",r);
+			}
 			queryJob = queryJob.waitFor();
 			if(queryJob == null) {
 				throw new Exception("QueryJob is null");

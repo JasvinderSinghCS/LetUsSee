@@ -20,7 +20,7 @@ public class ProfilingController {
     @Autowired
     ProfilingExecutor profilingExecutor ;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/app/profiling/{tableName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/api/profiling/{tableName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void startProfiling(@PathParam("tableName") String tableName) {
         try {
             profilingExecutor.executeProfiling(tableName);

@@ -2,8 +2,10 @@ package com.adqt.springservice.service;
 
 import com.adqt.springservice.entity.ColumnInformation;
 import com.adqt.springservice.entity.RuleValue;
+import com.adqt.springservice.entity.TableInformation;
 import com.adqt.springservice.repo.ColumnRepository;
 import com.adqt.springservice.repo.RuleValueRepository;
+import com.adqt.springservice.repo.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +19,15 @@ public class ProfilingExecutor {
     RuleValueRepository ruleValueRepository;
 
     @Autowired
-    ColumnRepository columnRepository;
-
-    @Autowired
     PipeLineCreator pipeLineCreator;
 
+    @Autowired
+    TableRepository tableRepository;
+
     public void executeProfiling(String tableName) throws FileNotFoundException {
+        TableInformation table = tableRepository.findByTableName(tableName);
         List<RuleValue> rules = ruleValueRepository.findByTableName(tableName);
-        List<ColumnInformation> columns = columnRepository.findByTableName(tableName);
-        Schema schema = new Schema(columns);
+        Schema schema = new Schema(table.getColumnInformations());
         pipeLineCreator.preProcess(tableName,schema,rules);
     }
 }

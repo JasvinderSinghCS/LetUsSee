@@ -1,5 +1,7 @@
 package com.adqt.springservice.repo;
 
+
+import com.adqt.springservice.entity.TableInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.adqt.springservice.entity.RuleValue;

@@ -72,7 +72,7 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
                 case "float":
                     return Float.parseFloat(value);
                 case "date":
-                    SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
+                    SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
                     Date d = f.parse(value);
                     return d.getTime();
                 case "boolean":

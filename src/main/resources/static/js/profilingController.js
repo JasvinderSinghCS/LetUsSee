@@ -230,10 +230,10 @@ var renderHighChartAccuracyFinal = function(data){
 			        },
 			        series: [{
 			            name: 'Total Count',
-			            data: [7.0, 6.9, 9.5]
+			            data: [0,0,0,0]
 			        },{
 			            name: 'Final Count',
-			            data: [10.0, 5.9, 0.5]
+			            data: [0,0,0,0]
 			        }]
 			});
 	}
@@ -639,4 +639,8 @@ var renderHighChartAccuracyPer = function(perdata){
 	
 	connect();
 	
+	
+	$scope.connectSocket = function(){
+		connect();
+	}
 });

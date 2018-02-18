@@ -7,7 +7,7 @@
 				<span style="color:white;font-size:16px;color:white">{{profilingTableName}}</span>	
 		</span>
 		<div style="padding-top:10px;float:right">
-		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('advance');rerenderHighchart()" ng-class="{'selected-tab':selectedTab =='advance'}">Count View</span>
+		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('advance');rerenderHighchart();connectSocket();" ng-class="{'selected-tab':selectedTab =='advance'}">Count View</span>
 		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('heatmap');rerender()" ng-class="{'selected-tab':selectedTab =='heatmap'}">Percentage View</span>
 		</div>	
 		<div>

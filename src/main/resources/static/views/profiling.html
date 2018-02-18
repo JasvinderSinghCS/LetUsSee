@@ -12,21 +12,27 @@
 	
 </div>
 
-<div style="position:relative" ng-show="selectedTab =='advance'">
-	<div style="border:1px solid white;padding:10px;position:absolute">
+<div style="position:absolute;top:100px;left:100px" ng-show="selectedTab =='advance'">
+	<div class="col-md-12">
+	<div class="col-md-5" style="border:1px solid white;padding:10px;position:relative">
 		<div id="container"></div>
 	</div>
 	
-	<div style="border:1px solid white;padding:10px;position:absolute">
+	<div class="col-md-5" style="border:1px solid white;padding:10px;position:relative">
 		<div id="consistency"></div>
 	</div>
 	
-	<div style="border:1px solid white;padding:10px;position:absolute">
-		<div id="conformity"></div>
-	</div>
 	
-	<div style="border:1px solid white;padding:10px;position:absolute">
-		<div id="completness"></div>
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-5" style="border:1px solid white;padding:10px;position:relative">
+			<div id="conformity"></div>
+		</div>
+	
+		<div class="col-md-5" style="border:1px solid white;padding:10px;position:relative">
+			<div id="completness"></div>
+		</div>
+	
 	</div>
 	
 </div>
@@ -822,5 +828,10 @@ input.highcharts-range-selector {
   font-weight: bold;
   font-size: 12px;
   fill: #60606a;
+}
+
+svg{
+width:500px;
+height:400px;
 }
 </style>

@@ -92,14 +92,14 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
     }
 
     private boolean interpretCompletenessRule(String data, String rule) {
-        if (rule.toUpperCase().equals("NOTNULL")) {
+        if (rule.toUpperCase().equals("NOT NULL")) {
             return data != null && !data.equals("") && !data.equals("-");
         }
         return false;
     }
 
     private boolean interpretConformityRule(String data, String ruleValue, String rule) {
-        if (rule.toUpperCase().equals("NOTNULL")) {
+        if (rule.toUpperCase().equals("DATATYPE")) {
             Comparable com = castObject(data, ruleValue);
             return com!=null;
         }
@@ -124,10 +124,10 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
             Comparable ruleValCom1 = castObject(range[0], dataType);
             Comparable ruleValCom2 = castObject(range[1], dataType);
             return dataCom.compareTo(ruleValCom1) > 0 && dataCom.compareTo(ruleValCom2) < 0;
-        } else if(rule.toUpperCase().trim().equals("NOTEQUAL")) {
+        } else if(rule.toUpperCase().trim().equals("NOT EQUAL")) {
                 return data.compareTo(ruleValue) != 0;
         }else{
-                return false;
+                return true;
         }
     }
 }

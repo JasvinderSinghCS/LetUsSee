@@ -63,7 +63,11 @@ public class RuleValueService {
 			index = ruleExpression.toUpperCase().indexOf("THAN") + 4;
 		} else if (ruleExpression.toUpperCase().startsWith(RuleKeyEnum.BETWEEN.getRuleKey())) {
 			ruleKeyValueMap.put("ruleKey", RuleKeyEnum.BETWEEN.getRuleKey());
-			index = 7;
+			index = 9;
+			int endIndex = ruleExpression.length()-1;
+			ruleValue = ruleExpression.substring(index,endIndex).trim();
+			ruleKeyValueMap.put("ruleValue", ruleValue);
+			return ruleKeyValueMap;
 		} else if (ruleExpression.toUpperCase().startsWith(RuleKeyEnum.EQUAL.getRuleKey())) {
 			ruleKeyValueMap.put("ruleKey", RuleKeyEnum.EQUAL.getRuleKey());
 			index = ruleExpression.toUpperCase().indexOf("TO") + 2;
@@ -80,6 +84,13 @@ public class RuleValueService {
 		} else if (ruleExpression.toUpperCase().startsWith(RuleKeyEnum.SMALLER.getRuleKey())) {
 			ruleKeyValueMap.put("ruleKey", RuleKeyEnum.SMALLER.getRuleKey());
 			index = ruleExpression.toUpperCase().indexOf("THAN") + 4;
+		}else if(ruleExpression.toUpperCase().startsWith(RuleKeyEnum.NOT_NULL.getRuleKey())) {
+			ruleKeyValueMap.put("ruleKey", RuleKeyEnum.NOT_NULL.getRuleKey());
+			ruleKeyValueMap.put("ruleValue", null);
+			return ruleKeyValueMap;
+		}else if(ruleExpression.toUpperCase().startsWith(RuleKeyEnum.DATATYPE.getRuleKey())) {
+			ruleKeyValueMap.put("ruleKey", RuleKeyEnum.DATATYPE.getRuleKey());
+			index = ruleExpression.toUpperCase().indexOf("IS") + 2;
 		}
 		ruleValue = ruleExpression.substring(index).trim();
 		ruleKeyValueMap.put("ruleValue", ruleValue);

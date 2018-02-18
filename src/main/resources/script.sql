@@ -38,12 +38,12 @@ DROP TABLE IF EXISTS `rule_value`;
 
 CREATE TABLE IF NOT EXISTS `rule_value`(
 	`id` int(10) PRIMARY KEY AUTO_INCREMENT,
-	`table_name` varchar(250) NOT NULL,
-	`column_name` varchar(250) NOT NULL,
-	`data_type`  varchar(250) NOT NULL,
-    `column_index` int NOT NULL,
-	`rule_type` varchar(250) NOT NULL,
-	`rule_key` varchar(250) NOT NULL,
-	`rule_value` varchar(250) NOT NULL
+	`table_name` varchar(250) ,
+	`column_name` varchar(250) ,
+	`data_type`  varchar(250),
+    `column_index` int ,
+	`rule_type` varchar(250),
+	`rule_key` varchar(250) ,
+	`rule_value` varchar(250)
 );
 	

@@ -16,7 +16,7 @@ public class RuleValue {
 	@javax.persistence.Column(name="table_name")
 	private String tableName;
 	
-	@javax.persistence.Column(name="column_name",nullable=false)
+	@javax.persistence.Column(name="column_name")
 	private String columnName;
 	
 	@javax.persistence.Column(name="data_type")

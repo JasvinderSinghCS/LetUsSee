@@ -5,45 +5,51 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.adqt.springservice.dto.ColumnInfoDTO;
 import com.adqt.springservice.dto.TableInfoDTO;
-import com.adqt.springservice.entity.Column;
-import com.adqt.springservice.entity.Table;
+import com.adqt.springservice.entity.ColumnInformation;
+import com.adqt.springservice.entity.TableInformation;
 import com.adqt.springservice.repo.TableRepository;
 
 @org.springframework.stereotype.Service
 public class TableInfoService {
 
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	TableRepository tableRepository;
 
 	public TableInfoDTO saveAndGetTable(TableInfoDTO tableInfoDTO) {
-		Table table = new Table();
+		log.info("recieved TableInfoDTO : {}",tableInfoDTO);
+		TableInformation table = new TableInformation();
 		table.setTableName(tableInfoDTO.getTableName());
-		Set<Column> columns = new HashSet<Column>();
+		Set<ColumnInformation> columns = new HashSet<ColumnInformation>();
 		int index = 0;
 		for (ColumnInfoDTO columnDTO : tableInfoDTO.getColumnInfoList()) {
-			Column column = new Column();
+			log.info("recieved ColumnInfoDTO : {}",columnDTO);
+			ColumnInformation column = new ColumnInformation();
 			column.setColumnName(columnDTO.getColumnName());
 			column.setColumnIndex(index);
 			column.setDataType(columnDTO.getDataType());
-			column.setTable(table);
 			columns.add(column);
 		}
-		table.setColumns(columns);
+		table.setColumnInformations(columns);
+		log.info("trying to save table : {}",table);
 		tableRepository.save(table);
 		return getTableInfoToSend(table);
 	}
 
-	private TableInfoDTO getTableInfoToSend(Table table) {
+	private TableInfoDTO getTableInfoToSend(TableInformation table) {
 		TableInfoDTO tableInfoDTO = new TableInfoDTO();
 		tableInfoDTO.setTableId(table.getId());
 		tableInfoDTO.setTableName(table.getTableName());
-		Set<Column> columns = table.getColumns();
+		Set<ColumnInformation> columns = table.getColumnInformations();
 		List<ColumnInfoDTO> columnInfoDTOList = new ArrayList<ColumnInfoDTO>();
-		for (Column column : columns) {
+		for (ColumnInformation column : columns) {
 			ColumnInfoDTO columnInfoDTO = new ColumnInfoDTO();
 			columnInfoDTO.setColumnId(column.getId());
 			columnInfoDTO.setColumnIndex(column.getColumnIndex());

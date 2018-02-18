@@ -1,12 +1,9 @@
 package com.adqt.springservice.repo;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
-import com.adqt.springservice.entity.Table;
+import com.adqt.springservice.entity.TableInformation;
 
-public interface TableRepository extends JpaRepository<Table, Integer> {
+public interface TableRepository extends JpaRepository<TableInformation, Integer> {
 	
 }

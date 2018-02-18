@@ -1,21 +1,14 @@
 package com.adqt.springservice.service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 import com.google.api.core.ApiFuture;
-import com.google.api.core.ApiFutureCallback;
-import com.google.api.core.ApiFutures;
-import com.google.api.gax.rpc.ApiException;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 public class PubSubPublisher {
     public static void publishMessages() throws Exception {

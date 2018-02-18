@@ -42,6 +42,12 @@ public class ColumnInfoDTO implements Serializable {
 	public void setColumnIndex(int columnIndex) {
 		this.columnIndex = columnIndex;
 	}
+
+	@Override
+	public String toString() {
+		return "ColumnInfoDTO [columnId=" + columnId + ", columnName=" + columnName + ", dataType=" + dataType
+				+ ", columnIndex=" + columnIndex + "]";
+	}
 	
 	
 	

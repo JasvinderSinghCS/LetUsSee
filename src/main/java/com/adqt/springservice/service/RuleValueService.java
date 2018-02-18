@@ -9,9 +9,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.adqt.springservice.dto.RuleValueDTO;
-import com.adqt.springservice.entity.Column;
+import com.adqt.springservice.entity.ColumnInformation;
 import com.adqt.springservice.entity.RuleValue;
-import com.adqt.springservice.entity.Table;
+import com.adqt.springservice.entity.TableInformation;
 import com.adqt.springservice.enums.RuleKeyEnum;
 import com.adqt.springservice.repo.ColumnRepository;
 import com.adqt.springservice.repo.RuleValueRepository;
@@ -33,8 +33,8 @@ public class RuleValueService {
 		List<RuleValue> ruleValueList = new ArrayList<RuleValue>();
 		for (RuleValueDTO ruleValueDTO : ruleValueDTOList) {
 			RuleValue ruleValue = new RuleValue();
-			Table table = tableRepository.findOne(ruleValueDTO.getTableId());
-			Column column = columnRepository.findOne(ruleValueDTO.getColumnId());
+			TableInformation table = tableRepository.findOne(ruleValueDTO.getTableId());
+			ColumnInformation column = columnRepository.findOne(ruleValueDTO.getColumnId());
 			ruleValue.setTableName(table.getTableName());
 			ruleValue.setColumnName(column.getColumnName());
 			ruleValue.setColumnIndex(column.getColumnIndex());

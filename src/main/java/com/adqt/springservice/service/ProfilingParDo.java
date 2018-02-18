@@ -1,6 +1,6 @@
 package com.adqt.springservice.service;
 
-import com.adqt.springservice.entity.Column;
+import com.adqt.springservice.entity.ColumnInformation;
 import com.adqt.springservice.entity.RuleValue;
 import com.adqt.springservice.enums.RuleTypeEnum;
 import com.google.api.services.bigquery.model.TableRow;
@@ -39,7 +39,7 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
         for (RuleValue rule : rules) {
             tableRow.set("tablename", localProfilingContext.getTableName());
             tableRow.set("row", rule.getRuleTypes());
-            Column column = localProfilingContext.getSchema().getColumn(rule.getColumnIndex());
+            ColumnInformation column = localProfilingContext.getSchema().getColumn(rule.getColumnIndex());
             Boolean status = true;
             String data = columns[rule.getColumnIndex()];
             if (rule.getRuleTypes().equalsIgnoreCase(RuleTypeEnum.ACCURACY.toString())) {

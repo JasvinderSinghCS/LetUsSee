@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-@javax.persistence.Table(name="table")
-public class Table {
+@javax.persistence.Table(name="table_info")
+public class TableInformation {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -21,8 +21,8 @@ public class Table {
 	@javax.persistence.Column(name="table_name")
 	private String tableName;
 
-	@OneToMany(mappedBy="table",orphanRemoval=true,cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	private Set<Column> columns;
+	@OneToMany(mappedBy="tableInformation",orphanRemoval=true,cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private Set<ColumnInformation> columnInformations;
 	
 	public int getId() {
 		return id;
@@ -40,17 +40,17 @@ public class Table {
 		this.tableName = tableName;
 	}
 
-	public Set<Column> getColumns() {
-		return columns;
+	public Set<ColumnInformation> getColumnInformations() {
+		return columnInformations;
 	}
 
-	public void setColumns(Set<Column> columns) {
-		this.columns = columns;
+	public void setColumnInformations(Set<ColumnInformation> columns) {
+		this.columnInformations = columns;
 	}
 
 	@Override
 	public String toString() {
-		return "Table [id=" + id + ", tableName=" + tableName + ", columns=" + columns + "]";
+		return "Table [id=" + id + ", tableName=" + tableName + ", columns=" + columnInformations + "]";
 	}
 	
 }

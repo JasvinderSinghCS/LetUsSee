@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 /**
- * @author prateek.mishra
+ * @author mudit.nagar
  * Property Reader for reading application properties
  */
 @Configuration
@@ -31,7 +31,8 @@ public class ApplicationProperties {
 
 	@Value("${spring.datasource.password}")
 	private String dataSourcePassword;
-
+	
+	
 	public String getSpringDataSourceUrl() {
 		return springDataSourceUrl;
 	}
@@ -74,4 +75,5 @@ public class ApplicationProperties {
 	public void setDefaulJdbcDriverName(String defaulJdbcDriverName) {
 		this.defaulJdbcDriverName = defaulJdbcDriverName;
 	}
+
 }

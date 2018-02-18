@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS `user_details` (
 	UNIQUE KEY `email` (`email`)
 );
 
-DROP TABLE IF EXISTS `column`;
+DROP TABLE IF EXISTS `column_info`;
 
-CREATE TABLE IF NOT  EXISTS `column`(
+CREATE TABLE IF NOT  EXISTS `column_info`(
 	`id` int(10) PRIMARY KEY AUTO_INCREMENT,
 	`table_id` int(10) NOT NULL,
 	`column_name` varchar(250) NOT NULL,
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT  EXISTS `column`(
     `column_index` int
 );
 
-DROP TABLE IF EXISTS `table`;
+DROP TABLE IF EXISTS `table_info`;
 
-CREATE TABLE IF NOT EXISTS `table`(
+CREATE TABLE IF NOT EXISTS `table_info`(
 	`id` int(10) PRIMARY KEY AUTO_INCREMENT,
 	`table_name` varchar(250) NOT NULL
 );

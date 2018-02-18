@@ -11,6 +11,15 @@ webApp.controller('configureSchema', function($scope,service, $location,$rootSco
 		  $scope.pageNumber -= 1;
 	  }
 	  
+	  $scope.setpage= function(number){
+		  $scope.pageNumber = number;
+	  }
+	  
+	  $scope.getAllTable = function(){
+		  service.getAllTable().then(function(data){
+			  $scope.allTables = data.data;
+		  })
+	  }
 	  $scope.tableSchema ={
 			  tableName:"",
 			  columnInfoList:[{columnName:"",dataType:"STRING"}]

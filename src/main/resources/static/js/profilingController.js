@@ -23,7 +23,7 @@ $rootScope.selectedLink ="profiling";
 			        },
 			        yAxis: {
 			            title: {
-			                text: 'Temperature (°C)'
+			                text: 'Percentage'
 			            },
 			            plotLines: [{
 			                value: 0,
@@ -60,7 +60,7 @@ $rootScope.selectedLink ="profiling";
 			        },
 			        yAxis: {
 			            title: {
-			                text: 'Temperature (°C)'
+			                text: 'Percentage'
 			            },
 			            plotLines: [{
 			                value: 0,
@@ -98,7 +98,7 @@ $rootScope.selectedLink ="profiling";
 			        },
 			        yAxis: {
 			            title: {
-			                text: 'Temperature (°C)'
+			                text: 'Percentage'
 			            },
 			            plotLines: [{
 			                value: 0,
@@ -135,7 +135,7 @@ $rootScope.selectedLink ="profiling";
 			        },
 			        yAxis: {
 			            title: {
-			                text: 'Temperature (°C)'
+			                text: 'Percentage'
 			            },
 			            plotLines: [{
 			                value: 0,
@@ -228,5 +228,39 @@ $rootScope.selectedLink ="profiling";
 	
 	setTimeout($scope.rerenderHighchart(),1000);
 	setTimeout($scope.rerenderHighchart(),5000);
+	
+	
+	
+	
+	/*Stomp for socket code
+	 * 
+	 * */
+	
+	$scope.socketConnected = false;
+	function connect() {
+	    var socket = new SockJS('/dataquality');
+	    stompClient = Stomp.over(socket);
+	    stompClient.connect({}, function (frame) {
+	        /*setConnected(true);*/
+	    	
+	    	$scope.socketConnected = true;
+	    	$scope.$apply();
+	        console.log('Connected: ' + frame);
+	        stompClient.subscribe('/app/dataquality/accuracy', function (greeting) {
+	            showGreeting(JSON.parse(greeting.body).content);
+	        });
+	    });
+	}
+
+	function disconnect() {
+	    if (stompClient !== null) {
+	        stompClient.disconnect();
+	        $scope.socketConnected = false;
+	    }
+	    /*setConnected(false);*/
+	    console.log("Disconnected");
+	}
+	
+	connect();
 	
 });

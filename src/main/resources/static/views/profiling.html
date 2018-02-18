@@ -1,35 +1,40 @@
 <div class="black-background">
 	<div layout="row" style="width:100%;">
-		<span style="color:white;font-size:16px;padding:5px">Schema Name</span>	
-		<span style="color:white;font-size:16px;padding:5px;color:gray">{{selectedTable}}</span>	
+		<span style="color:white;font-size:16px;padding:5px"><img src="../images/table.png" width="20px" height="20px"/></span>	
+		<span style="color:white;font-size:16px;padding:5px;color:white">{{selectedTable}}</span>	
 		
 		<div style="padding-top:10px;float:right">
 		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('advance');rerenderHighchart()" ng-class="{'selected-tab':selectedTab =='advance'}">Advance Data Profiling</span>
 		<span style="color:white;font-size:16px;padding:10px;border:2px solid white" ng-click="changetab('heatmap');rerender()" ng-class="{'selected-tab':selectedTab =='heatmap'}">Heat Map Metrics</span>
 		</div>	
+		<div>
+			<div ng-if="socketConnected" style="color:white;">
+				<div id="circle"><span style="padding:25px">Connected</span></div>
+			</div>
+		</div>
 	</div>
 	
 	
 </div>
 
-<div style="position:absolute;top:100px;left:100px" ng-show="selectedTab =='advance'">
+<div style="position:absolute;top:100px;left:150px" ng-show="selectedTab =='advance'">
 	<div class="col-md-12">
-	<div class="col-md-5" style="border:1px solid white;padding:10px;position:relative">
+	<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
 		<div id="container"></div>
 	</div>
 	
-	<div class="col-md-5" style="border:1px solid white;padding:10px;position:relative">
+	<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
 		<div id="consistency"></div>
 	</div>
 	
 	
 	</div>
 	<div class="col-md-12">
-		<div class="col-md-5" style="border:1px solid white;padding:10px;position:relative">
+		<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
 			<div id="conformity"></div>
 		</div>
 	
-		<div class="col-md-5" style="border:1px solid white;padding:10px;position:relative">
+		<div class="col-md-5" style="padding:0px;margin:0px;position:relative">
 			<div id="completness"></div>
 		</div>
 	
@@ -37,17 +42,20 @@
 	
 </div>
 
-<div style="position: absolute;top: 40%;width: 80%;height: 100%;left: 10%;" ng-show="selectedTab =='heatmap'">
+<div style="position: absolute;top: 20%;width: 80%;height: 100%;left: 10%;" ng-show="selectedTab =='heatmap'">
 
+	<div style="padding-left:50px;padding-bottom:30px">
+		<span style="padding:10px"><img src="../images/metric.png" width="45" height="45"></span>
+		<span style="font-size:18px;color:white">Data Quality Metrics Heat Map</span>
+	</div>
 	<div style="padding:100px;position:relative">
 		<div class="treemap"></div>
 	</div>
-	
 </div>
 
 <style>
 .black-background{
-	background-color: #000000f5;
+	background-color: #0e0e0e9e;;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -832,6 +840,8 @@ input.highcharts-range-selector {
 
 svg{
 width:500px;
-height:400px;
+height:350px;
 }
+
+#circle { width: 18px; height: 18px; background: #01cc01; -moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px; }
 </style>

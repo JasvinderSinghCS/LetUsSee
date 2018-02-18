@@ -43,6 +43,18 @@ public class TableInfoService {
 		tableRepository.save(table);
 		return getTableInfoToSend(table);
 	}
+	
+	public List<TableInfoDTO> getAllTable(){
+		List<TableInfoDTO> tableList = new ArrayList<>();
+		List<TableInformation> allTable = tableRepository.findAll();
+		for (TableInformation tableInfo:allTable){
+			TableInfoDTO tableDto = getTableInfoToSend(tableInfo);
+			tableList.add(tableDto);
+			
+		}
+		return tableList;
+		
+	}
 
 	private TableInfoDTO getTableInfoToSend(TableInformation table) {
 		TableInfoDTO tableInfoDTO = new TableInfoDTO();

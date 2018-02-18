@@ -19,8 +19,9 @@ public class TableInfoController {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/app/table", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/api/table", produces = MediaType.APPLICATION_JSON_VALUE)
 	public TableInfoDTO saveAndGetTable(@RequestBody TableInfoDTO tableInfoDTO) {
+		
 		return tableInfoService.saveAndGetTable(tableInfoDTO);
 	}
 	

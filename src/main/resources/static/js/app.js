@@ -1,4 +1,4 @@
-var webApp = angular.module('webApp', ['ngRoute']);				
+var webApp = angular.module('webApp', ['ngRoute','ui.bootstrap']);				
 
 webApp.config(function ($routeProvider) {
     
@@ -21,6 +21,11 @@ webApp.config(function ($routeProvider) {
      .when('/profile', {
          controller: 'profileController',
          templateUrl: 'views/profile.html',
+         controllerAs: 'vm'
+     })
+     .when('/profiling', {
+         controller: 'profilingController',
+         templateUrl: 'views/profiling.html',
          controllerAs: 'vm'
      })
       

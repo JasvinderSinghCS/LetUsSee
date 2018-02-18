@@ -1,5 +1,6 @@
 package com.adqt.springservice.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,7 +13,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @javax.persistence.Table(name="table_info")
-public class TableInformation {
+public class TableInformation implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

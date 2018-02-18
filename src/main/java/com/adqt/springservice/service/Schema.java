@@ -2,10 +2,11 @@ package com.adqt.springservice.service;
 
 import com.adqt.springservice.entity.ColumnInformation;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-public class Schema {
+public class Schema implements Serializable{
 
     Set<ColumnInformation> columns;
 

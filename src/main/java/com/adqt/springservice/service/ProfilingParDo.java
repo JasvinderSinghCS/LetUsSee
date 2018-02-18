@@ -8,6 +8,8 @@ import com.google.cloud.dataflow.sdk.values.TupleTag;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollectionView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,8 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
 
     private final PCollectionView<ProfilingContext> profilingContext;
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     public ProfilingParDo(PCollectionView<ProfilingContext> profilingContext) {
         this.profilingContext = profilingContext;
     }
@@ -32,9 +36,14 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
         List<RuleValue> rules = localProfilingContext.getRules();
         String[] columns = row.split(",");
         TableRow tableRow = new TableRow();
+        tableRow.set("tablename", localProfilingContext.getTableName());
+        tableRow.set("row", row);
+        tableRow.set("accuracy", true);
+        tableRow.set("completeness", true);
+        tableRow.set("conformity", true);
+        tableRow.set("consistency", true);
         for (RuleValue rule : rules) {
-            tableRow.set("tablename", localProfilingContext.getTableName());
-            tableRow.set("row", rule.getRuleTypes());
+            log.info("Row processing started {} with rule {}",row,rule);
             ColumnInformation column = localProfilingContext.getSchema().getColumn(rule.getColumnIndex());
             Boolean status = true;
             String data = columns[rule.getColumnIndex()];
@@ -42,16 +51,18 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
                 status = interpretAccuracyRule(data, rule.getRuleValue(), rule.getDataType(), rule.getRuleKey());
                 tableRow.set("accuracy", status);
             } else if (RuleTypeEnum.COMPLETNESS.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                tableRow.set("completeness", status);
                 status = interpretCompletenessRule(data, rule.getRuleKey());
+                tableRow.set("completeness", status);
             } else if (RuleTypeEnum.CONFORMITY.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                tableRow.set("conformity", status);
                 status = interpretConformityRule(data, rule.getRuleValue(), rule.getRuleKey());
+                tableRow.set("conformity", status);
             } else if (RuleTypeEnum.CONSISTENCY.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                tableRow.set("consistency", status);
                 status = interpretConsistencyRule(data, rule.getRuleValue(), rule.getRuleKey());
+                tableRow.set("consistency", status);
             }
         }
+
+        log.info("@@@@ TABLE ROW @@@@"+tableRow);
 
         c.output(tableRow);
 //        c.output(KV.of(localProfilingContext.getTableName(), Rows));

@@ -7,7 +7,9 @@ public enum RuleKeyEnum {
 	EQUAL(3,"EQUAL"),
 	BETWEEN(4,"BETWEEN"),
 	IN(5,"IN"),
-	NOT_EQUAL(6,"NOT_EQUAL");
+	NOT_EQUAL(6,"NOT EQUAL"),
+	NOT_NULL(7,"NOT NULL"),
+	DATATYPE(8,"DATATYPE");
 	
 	private RuleKeyEnum(int id, String ruleKey) {
 		this.id = id;

@@ -3,20 +3,21 @@ package com.adqt.springservice.service;
 import com.adqt.springservice.entity.ColumnInformation;
 
 import java.util.List;
+import java.util.Set;
 
 public class Schema {
 
-    List<ColumnInformation> columns;
+    Set<ColumnInformation> columns;
 
-    public Schema(List<ColumnInformation> columns) {
+    public Schema(Set<ColumnInformation> columns) {
         this.columns= columns;
     }
 
-    public List<ColumnInformation> getColumns() {
+    public Set<ColumnInformation> getColumns() {
         return columns;
     }
 
-    public void setColumns(List<ColumnInformation> columns) {
+    public void setColumns(Set<ColumnInformation> columns) {
         this.columns = columns;
     }
 

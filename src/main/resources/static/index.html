@@ -16,6 +16,7 @@
 <script src="js/angular/angular-route.js"></script>
 <script src="js/app.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
 <script src="js/jquery-ui-1.11.4/external/jquery/jquery.js"></script>
 <script src="js/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script src="js/angular-material-1.1.1/angular-animate.js"></script>
@@ -23,13 +24,14 @@
 <script src="js/angular-material-1.1.1/angular-material.js"></script>
 
 <!-- Controllers -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js"></script>
 <script src="js/MainController.js"></script>
 <script src="js/loginController.js"></script>
 <script src="js/signupController.js"></script>
 <script src="js/profileController.js"></script>
 <script src="js/aboutController.js"></script>
 <script src="js/configureSchema.js"></script>
+<script src="js/profilingController.js"></script>
 
 
 <!-- Service -->
@@ -48,17 +50,24 @@ Let Us See
 			<a class="navbar-brand" title="Apna Data Quality Rule">ADQT</a>
 		</div>
 		<ul class="nav navbar-nav">
-			<li><a ng-click="login()" ng-show="!isLoggedIn">Login</a></li>
-			<li><a ng-click="home()" ng-show="isLoggedIn">Home</a></li>
-			<li><a ng-click="configure()" ng-show="isLoggedIn">Configure</a></li>
-			<li><a ng-click="about();">About</a></li>
+			<li><a ng-click="login()" ng-class="{'selected-link':selectedLink == 'login'}" ng-show="!isLoggedIn">Login</a></li>
+			<li><a ng-click="home()" ng-show="isLoggedIn" ng-class="{'selected-link':selectedLink == 'home'}">Home</a></li>
+			<li><a ng-click="configure()" ng-show="isLoggedIn" ng-class="{'selected-link':selectedLink == 'configure'}">Configure</a></li>
+			<li><a ng-click="profile()" ng-show="isLoggedIn" ng-class="{'selected-link':selectedLink == 'profiling'}">Profiling</a></li>
+			<!-- <li><a ng-click="about();">About</a></li> -->
 			<li><a ng-click="logout()" ng-show="isLoggedIn">Logout</a></li>
 		</ul>
 	</nav>
 
-	<div class="container">
+	<div class="">
 		<div ng-view></div>
 	</div>
 
 </body>
+<style>
+.selected-link{
+background-color:black;
+}
+</style>
 </html>
+

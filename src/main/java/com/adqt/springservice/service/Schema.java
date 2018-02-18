@@ -1,27 +1,27 @@
 package com.adqt.springservice.service;
 
-import com.adqt.springservice.entity.Column;
+import com.adqt.springservice.entity.ColumnInformation;
 
 import java.util.List;
 
 public class Schema {
 
-    List<Column> columns;
+    List<ColumnInformation> columns;
 
-    public Schema(List<Column> columns) {
+    public Schema(List<ColumnInformation> columns) {
         this.columns= columns;
     }
 
-    public List<Column> getColumns() {
+    public List<ColumnInformation> getColumns() {
         return columns;
     }
 
-    public void setColumns(List<Column> columns) {
+    public void setColumns(List<ColumnInformation> columns) {
         this.columns = columns;
     }
 
-    public Column getColumn(Integer columnIndex) {
-        for(Column column:columns){
+    public ColumnInformation getColumn(Integer columnIndex) {
+        for(ColumnInformation column:columns){
             if(column.getColumnIndex() == columnIndex)
                 return column;
         }

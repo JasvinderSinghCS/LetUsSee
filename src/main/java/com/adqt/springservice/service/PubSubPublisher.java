@@ -1,10 +1,23 @@
 package com.adqt.springservice.service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
+
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 
+@Service
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

@@ -34,6 +34,11 @@ public class TableInfoDTO implements Serializable {
 	public void setColumnInfoList(List<ColumnInfoDTO> columnInfoList) {
 		this.columnInfoList = columnInfoList;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "TableInfoDTO [tableId=" + tableId + ", tableName=" + tableName + ", columnInfoList=" + columnInfoList
+				+ "]";
+	}
 	
 }

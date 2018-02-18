@@ -8,11 +8,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-@javax.persistence.Table(name="column")
-public class Column {
+@javax.persistence.Table(name="column_info")
+public class ColumnInformation {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@javax.persistence.Column(name="id")
 	private int id;
 	
 	@javax.persistence.Column(name="column_name",nullable=false)
@@ -25,8 +26,8 @@ public class Column {
 	private int columnIndex;
 	
 	@ManyToOne
-	@JoinColumn(name = "table_id", referencedColumnName = "id", nullable = false)
-	private Table table;
+	@JoinColumn(name = "table_id", referencedColumnName = "id")
+	private TableInformation tableInformation;
 	
 	public int getId() {
 		return id;
@@ -60,18 +61,18 @@ public class Column {
 		this.columnIndex = columnIndex;
 	}
 
-	public Table getTable() {
-		return table;
+	public TableInformation getTableInformation() {
+		return tableInformation;
 	}
 
-	public void setTable(Table table) {
-		this.table = table;
+	public void setTableInformation(TableInformation table) {
+		this.tableInformation = table;
 	}
 
 	@Override
 	public String toString() {
 		return "Column [id=" + id + ", columnName=" + columnName + ", dataType=" + dataType + ", columnIndex="
-				+ columnIndex + ", table=" + table + "]";
+				+ columnIndex + ", table=" + tableInformation + "]";
 	}
 
 }

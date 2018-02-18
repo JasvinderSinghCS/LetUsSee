@@ -462,10 +462,10 @@ var renderHighChartAccuracyPer = function(perdata){
 	}
 	
 	$scope.rerenderPer =function(){
-		renderHighChartCompletnessPer([9,8,0,4]);
-		renderHighChartConformityPer([9,8,0,4]);
-		renderHighChartAccuracyPer([9,8,0,4]);
-		renderHighChartConsistencyPer([9,8,0,4]);
+		renderHighChartCompletnessPer([0,0,0,0]);
+		renderHighChartConformityPer([0,0,0,0]);
+		renderHighChartAccuracyPer([0,0,0,0]);
+		renderHighChartConsistencyPer([0,0,0,0]);
 	}
 	
 	$scope.rerender = function(){
@@ -504,22 +504,26 @@ var renderHighChartAccuracyPer = function(perdata){
 	$scope.accuracyData = [];
 	$scope.accuracyDataAxis = {
 			total:[],
-			qualified:[]
+			qualified:[],
+			percentage:[]
 	}
 	$scope.consistencyData = [];
 	$scope.consistencyDataAxis = {
 			total:[],
-			qualified:[]
+			qualified:[],
+			percentage:[]
 	}
 	$scope.conformityData = [];
 	$scope.conformityDataAxis = {
 			total:[],
-			qualified:[]
+			qualified:[],
+			percentage:[]
 	}
 	$scope.completnessData = [];
 	$scope.completnessDataAxis = {
 			total:[],
-			qualified:[]
+			qualified:[],
+			percentage:[]
 	}
 	$scope.socketConnected = false;
 	function connect() {
@@ -548,9 +552,11 @@ var renderHighChartAccuracyPer = function(perdata){
 	            	var parsedJson = JSON.parse(data);
 	            	 $scope.accuracyDataAxis.total.push(parsedJson.totalRowCount);
 	            	 $scope.accuracyDataAxis.qualified.push(parsedJson.qualifiedRowCount);
+	            	 $scope.accuracyDataAxis.qualified.push(parsedJson.percentage);
 	            })
 	            
 	            renderHighChartAccuracyFinal($scope.accuracyDataAxis);
+	            renderHighChartAccuracyPer($scope.accuracyDataAxis.percentage)
 	            
 	        });
 	        
@@ -573,9 +579,12 @@ var renderHighChartAccuracyPer = function(perdata){
 	            	var parsedJson = JSON.parse(data);
 	            	 $scope.consistencyDataAxis.total.push(parsedJson.totalRowCount);
 	            	 $scope.consistencyDataAxis.qualified.push(parsedJson.qualifiedRowCount);
+	            	 $scope.consistencyDataAxis.qualified.push(parsedJson.percentage);
 	            })
 	            
 	            renderHighChartConsistencyFinal($scope.consistencyDataAxis);
+	            renderHighChartConsistencyPer($scope.consistencyDataAxis.percentage)
+	            
 	        });
 	        
 	        stompClient.subscribe('/dataquality/conformity', function (greeting) {
@@ -597,9 +606,11 @@ var renderHighChartAccuracyPer = function(perdata){
 	            	var parsedJson = JSON.parse(data);
 	            	 $scope.conformityDataAxis.total.push(parsedJson.totalRowCount);
 	            	 $scope.conformityDataAxis.qualified.push(parsedJson.qualifiedRowCount);
+	            	 $scope.conformityDataAxis.qualified.push(parsedJson.percentage);
 	            })
 	            
 	            renderHighChartConformityFinal($scope.conformityDataAxis);
+	            renderHighChartConformityPer($scope.conformityDataAxis.percentage);
 	        });
 	        
 	        stompClient.subscribe('/dataquality/completness', function (greeting) {
@@ -620,9 +631,11 @@ var renderHighChartAccuracyPer = function(perdata){
 	            	var parsedJson = JSON.parse(data);
 	            	$scope.completnessDataAxis.total.push(parsedJson.totalRowCount);
 	            	$scope.completnessDataAxis.qualified.push(parsedJson.qualifiedRowCount);
+	            	$scope.completnessDataAxis.qualified.push(parsedJson.percentage);
 	            })
 	            
 	            renderHighChartCompletnessFinal($scope.completnessDataAxis);
+	            renderHighChartCompletnessPer($scope.completnessDataAxis.percentage)
 	        });
 	    });
 	}

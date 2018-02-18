@@ -120,8 +120,12 @@ public class DataQualityStatService {
 				FieldValue fieldValueRowCount = fieldValueList.get("row_count");
 				long rowCount = fieldValueRowCount.getLongValue();
 				FieldValue fieldValueAccuracy = fieldValueList.get("accuracy");
+				if(null == fieldValueAccuracy) {
+					countMap.put(true,0l);
+				}else {
 				boolean status = fieldValueAccuracy.getBooleanValue();
 				countMap.put(status,rowCount);
+				}
 			}
 			long totalFinalCount = 0l;
 			long totalQualifiedCount = 0l;
@@ -172,8 +176,12 @@ public class DataQualityStatService {
 				FieldValue fieldValueRowCount = fieldValueList.get("row_count");
 				long rowCount = fieldValueRowCount.getLongValue();
 				FieldValue fieldValueAccuracy = fieldValueList.get("completeness");
+				if(null == fieldValueAccuracy) {
+					countMap.put(true,0l);
+				}else {
 				boolean status = fieldValueAccuracy.getBooleanValue();
 				countMap.put(status,rowCount);
+				}
 			}
 			long totalFinalCount = 0l;
 			long totalQualifiedCount = 0l;
@@ -223,8 +231,12 @@ public class DataQualityStatService {
 				FieldValue fieldValueRowCount = fieldValueList.get("row_count");
 				long rowCount = fieldValueRowCount.getLongValue();
 				FieldValue fieldValueAccuracy = fieldValueList.get("conformity");
+				if(null == fieldValueAccuracy) {
+					countMap.put(true,0l);
+				}else {
 				boolean status = fieldValueAccuracy.getBooleanValue();
 				countMap.put(status,rowCount);
+				}
 			}
 			long totalFinalCount = 0l;
 			long totalQualifiedCount = 0l;
@@ -273,8 +285,12 @@ public class DataQualityStatService {
 				FieldValue fieldValueRowCount = fieldValueList.get("row_count");
 				long rowCount = fieldValueRowCount.getLongValue();
 				FieldValue fieldValueAccuracy = fieldValueList.get("consistency");
+				if(null == fieldValueAccuracy) {
+					countMap.put(true,0l);
+				}else {
 				boolean status = fieldValueAccuracy.getBooleanValue();
 				countMap.put(status,rowCount);
+				}
 			}
 			long totalFinalCount = 0l;
 			long totalQualifiedCount = 0l;

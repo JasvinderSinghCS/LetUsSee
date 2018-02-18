@@ -2,7 +2,7 @@ DROP SCHEMA IF EXISTS `let_us_see`;
 
 CREATE SCHEMA `let_us_see`;
 
-USE SCHEMA `le_us_see`;
+USE SCHEMA `let_us_see`;
 
 
 DROP TABLE IF EXISTS `user_details`;
@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS `table_info`(
 	`table_name` varchar(250) NOT NULL
 );
 
-DROP TABLE IF EXISTS `rule_vale`;
+DROP TABLE IF EXISTS `rule_value`;
 
-CREATE TABLE IF NOT EXISTS `rule_vale`(
+CREATE TABLE IF NOT EXISTS `rule_value`(
 	`id` int(10) PRIMARY KEY AUTO_INCREMENT,
 	`table_name` varchar(250) NOT NULL,
 	`column_name` varchar(250) NOT NULL,

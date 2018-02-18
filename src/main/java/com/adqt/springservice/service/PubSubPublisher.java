@@ -18,11 +18,8 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 
 @Service
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-
 public class PubSubPublisher {
+    /*
     public static void publishMessages(String dataPath) throws Exception {
 
         TopicName topicName = TopicName.of("gcp-data-engineer-188205", "adqt");
@@ -38,7 +35,7 @@ public class PubSubPublisher {
                 ByteString data = ByteString.copyFromUtf8(message);
                 PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
                 publisher.publish(pubsubMessage);
-                /*// add an asynchronous callback to handle success / failure
+                // add an asynchronous callback to handle success / failure
                 ApiFutures.addCallback(future, new ApiFutureCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
@@ -55,7 +52,7 @@ public class PubSubPublisher {
                         // Once published, returns server-assigned message ids (unique within the topic)
                         System.out.println(message + " :" + messageId);
                     }
-                });*/
+                });
             }
         } finally {
             if (publisher != null) {
@@ -69,5 +66,5 @@ public class PubSubPublisher {
         String filePath = args[0];
         publishMessages(filePath);
     }
-
+*/
 }

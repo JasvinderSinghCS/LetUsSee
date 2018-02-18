@@ -107,8 +107,6 @@
             <artifactId>google-api-services-discovery</artifactId>
             <version>v1-rev58-1.22.0</version>
         </dependency>
-
-
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -119,7 +117,6 @@
 			<artifactId>google-cloud-dataflow-java-sdk-all</artifactId>
 			<version>1.9.0</version>
 		</dependency>
-
         <dependency>
             <groupId>org.apache.beam</groupId>
             <artifactId>beam-sdks-java-io-google-cloud-platform</artifactId>

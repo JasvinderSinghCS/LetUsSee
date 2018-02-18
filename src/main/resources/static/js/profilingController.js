@@ -9,7 +9,157 @@ $rootScope.selectedLink ="profiling";
 		$scope.selectedTab = value;
 	}
 	
+var renderHighChartCompletnessFinal = function(data){
+		
+		Highcharts.chart('completness', {
+
+			  title: {
+			            text: 'Data Completness',
+			            x: -20 //center
+			        },
+			        
+			        yAxis: {
+			            title: {
+			                text: 'Count'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Total Count',
+			            data: data.total
+			        },{
+			            name: 'Final Count',
+			            data: data.qualified
+			        }]
+			});
+	}
+var renderHighChartConsistencyFinal = function(data){
+		
+		Highcharts.chart('consistency', {
+
+			  title: {
+			            text: 'Data Consistency',
+			            x: -20 //center
+			        },
+			        
+			        yAxis: {
+			            title: {
+			                text: 'Count'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Total Count',
+			            data: data.total
+			        },{
+			            name: 'Final Count',
+			            data: data.qualified
+			        }]
+			});
+	}
 	
+var renderHighChartConformityFinal = function(data){
+		
+		Highcharts.chart('conformity', {
+
+			  title: {
+			            text: 'Data Conformity',
+			            x: -20 //center
+			        },
+			        
+			        yAxis: {
+			            title: {
+			                text: 'Count'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Total Count',
+			            data: data.total
+			        },{
+			            name: 'Final Count',
+			            data: data.qualified
+			        }]
+			});
+	}
+var renderHighChartAccuracyFinal = function(data){
+		
+		Highcharts.chart('container', {
+
+			  title: {
+			            text: 'Data Accuracy',
+			            x: -20 //center
+			        },
+			       
+			        yAxis: {
+			            title: {
+			                text: 'Count'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Total Count',
+			            data: data.total
+			        },{
+			            name: 'Final Count',
+			            data: data.qualified
+			        }]
+			});
+	}
+
+
 	var renderHighChartAccuracy = function(){
 		
 		Highcharts.chart('container', {
@@ -40,13 +190,15 @@ $rootScope.selectedLink ="profiling";
 			        },
 			        series: [{
 			            name: 'Total Count',
-			            data: [7.0, 6.9, 9.5]
+			            data: [0,0,0,0]
 			        },{
 			            name: 'Final Count',
-			            data: [10.0, 5.9, 0.5]
+			            data: [0,0,0,0]
 			        }]
 			});
 	}
+	
+	
 	
 	var renderHighChartConformity = function(){
 		
@@ -117,10 +269,10 @@ $rootScope.selectedLink ="profiling";
 			        },
 			        series: [{
 			            name: 'Total Count',
-			            data: [7.0, 6.9, 9.5]
+			            data: [0,0,0,0]
 			        },{
 			            name: 'Final Count',
-			            data: [10.0, 5.9, 0.5]
+			            data: [0,0,0,0]
 			        }]
 			});
 	}
@@ -155,10 +307,10 @@ $rootScope.selectedLink ="profiling";
 			        },
 			        series: [{
 			            name: 'Total Count',
-			            data: [7.0, 6.9, 9.5]
+			            data: [0,0,0,0]
 			        },{
 			            name: 'Final Count',
-			            data: [10.0, 5.9, 0.5]
+			            data: [0,0,0,0]
 			        }]
 			});
 	}
@@ -168,7 +320,7 @@ $rootScope.selectedLink ="profiling";
 	
 	
 	
-var renderHighChartAccuracyPer = function(){
+var renderHighChartAccuracyPer = function(perdata){
 		
 		Highcharts.chart('container_per', {
 
@@ -198,12 +350,12 @@ var renderHighChartAccuracyPer = function(){
 			        },
 			        series: [{
 			            name: 'Percentage',
-			            data: [7.0, 6.9, 9.5]
+			            data: perdata
 			        }]
 			});
 	}
 	
-	var renderHighChartConformityPer = function(){
+	var renderHighChartConformityPer = function(perdata){
 		
 		Highcharts.chart('conformity_per', {
 
@@ -233,13 +385,13 @@ var renderHighChartAccuracyPer = function(){
 			        },
 			        series: [{
 			            name: 'Percentage',
-			            data: [7.0, 6.9, 9.5]
+			            data: perdata
 			        }]
 			});
 	}
 
 	
-	var renderHighChartConsistencyPer = function(){
+	var renderHighChartConsistencyPer = function(perdata){
 		
 		Highcharts.chart('consistency_per', {
 
@@ -269,12 +421,12 @@ var renderHighChartAccuracyPer = function(){
 			        },
 			        series: [{
 			            name: 'Percentage',
-			            data: [7.0, 6.9, 9.5]
+			            data: perdata
 			        }]
 			});
 	}
 
-	var renderHighChartCompletnessPer = function(){
+	var renderHighChartCompletnessPer = function(perdata){
 		
 		Highcharts.chart('completness_per', {
 
@@ -304,71 +456,16 @@ var renderHighChartAccuracyPer = function(){
 			        },
 			        series: [{
 			            name: 'Percentage',
-			            data: [7.0, 6.9, 9.5]
+			            data: perdata
 			        }]
 			});
 	}
-
-	var render = function(){
-		
-		var data = {
-				  "name": "cluster",
-				  "children": [
-				    { "name": "Profiling","mcap": 360.43,"color":"green" },
-				    { "name": "Completness", "mcap": 325.71,"color":"green" },
-				    { "name": "Accuracy", "mcap": 183.75 ,"color":"green"},
-				    { "name": "Accuracy", "mcap": 117.66 ,"color":"green"},
-				    { "name": "Consistency", "mcap": 61.72 ,"color":"green"},
-				    { "name": "Conformity", "mcap": 130.27 ,"color":"red"}
-				  ]
-				};
-
-				var color = d3.scale.category20c();
-
-				var treemap =
-				  d3.layout.treemap()
-				  // use 100 x 100 px, which we'll apply as % later
-				  .size([100, 100])
-				  .sticky(true)
-				  .value(function(d) { return d.mcap; });
-
-				var div = d3.select(".treemap");
-
-				function position() {
-				  this
-				    .style("left", function(d) { return d.x + "%"; })
-				    .style("top", function(d) { return d.y + "%"; })
-				    .style("width", function(d) { return d.dx + "%"; })
-				    .style("height", function(d) { return d.dy + "%"; });
-				}
-
-				function getLabel(d) {
-				  return d.name;
-				}
-
-				function getColor(d) {
-				  return d.color;
-				}
-
-				var node =
-				  div.datum(data).selectAll(".node")
-				  .data(treemap.nodes)
-				  .enter().append("div")
-				  .attr("class", "node")
-				  .call(position)
-				  .style("background", function(d) { return getColor(d) }).
-				style("border","1px solid gray")
-				  .text(getLabel);
-		
-	}
-	
-	render();
 	
 	$scope.rerenderPer =function(){
-		renderHighChartCompletnessPer();
-		renderHighChartConformityPer();
-		renderHighChartAccuracyPer();
-		renderHighChartConsistencyPer();
+		renderHighChartCompletnessPer([9,8,0,4]);
+		renderHighChartConformityPer([9,8,0,4]);
+		renderHighChartAccuracyPer([9,8,0,4]);
+		renderHighChartConsistencyPer([9,8,0,4]);
 	}
 	
 	$scope.rerender = function(){
@@ -383,7 +480,13 @@ var renderHighChartAccuracyPer = function(){
 		renderHighChartConsistency();
 		
 	}
-	
+	$scope.getRandomArray = function(){
+		var arr = []
+		for(var i = 0; i<10;i++){
+			arr.push($scope.generateRandom());
+		}
+		return arr;
+	}
 	if($rootScope.profilingTableName){
 		setTimeout($scope.rerenderHighchart(),1000);
 		setTimeout($scope.rerenderHighchart(),5000);
@@ -397,6 +500,27 @@ var renderHighChartAccuracyPer = function(){
 	 * 
 	 * */
 	
+	
+	$scope.accuracyData = [];
+	$scope.accuracyDataAxis = {
+			total:[],
+			qualified:[]
+	}
+	$scope.consistencyData = [];
+	$scope.consistencyDataAxis = {
+			total:[],
+			qualified:[]
+	}
+	$scope.conformityData = [];
+	$scope.conformityDataAxis = {
+			total:[],
+			qualified:[]
+	}
+	$scope.completnessData = [];
+	$scope.completnessDataAxis = {
+			total:[],
+			qualified:[]
+	}
 	$scope.socketConnected = false;
 	function connect() {
 	    var socket = new SockJS('/dataquality');
@@ -407,12 +531,103 @@ var renderHighChartAccuracyPer = function(){
 	    	$scope.socketConnected = true;
 	    	$scope.$apply();
 	        console.log('Connected: ' + frame);
-	        stompClient.subscribe('/app/dataquality/accuracy', function (greeting) {
-	            showGreeting(JSON.parse(greeting.body).content);
+	        stompClient.subscribe('/dataquality/accuracy', function (greeting) {
+	            if($scope.accuracyData.length > 10){
+	            	$scope.accuracyData.shift();
+	            	$scope.accuracyData.push(greeting.body);
+	            	
+	            }
+	            else{
+	            	$scope.accuracyData.push(greeting.body);
+	            }
+	            $scope.accuracyDataAxis = {
+	        			total:[],
+	        			qualified:[]
+	        	}
+	            angular.forEach($scope.accuracyData,function(data){
+	            	var parsedJson = JSON.parse(data);
+	            	 $scope.accuracyDataAxis.total.push(parsedJson.totalRowCount);
+	            	 $scope.accuracyDataAxis.qualified.push(parsedJson.qualifiedRowCount);
+	            })
+	            
+	            renderHighChartAccuracyFinal($scope.accuracyDataAxis);
+	            
+	        });
+	        
+	        stompClient.subscribe('/dataquality/consistency', function (greeting) {
+	        	console.log(greeting);
+	        	
+	        	if($scope.consistencyData.length > 10){
+	            	$scope.consistencyData.shift();
+	            	$scope.consistencyData.push(greeting.body);
+	            	
+	            }
+	            else{
+	            	$scope.consistencyData.push(greeting.body);
+	            }
+	            $scope.accuracyDataAxis = {
+	        			total:[],
+	        			qualified:[]
+	        	}
+	            angular.forEach($scope.consistencyData,function(data){
+	            	var parsedJson = JSON.parse(data);
+	            	 $scope.consistencyDataAxis.total.push(parsedJson.totalRowCount);
+	            	 $scope.consistencyDataAxis.qualified.push(parsedJson.qualifiedRowCount);
+	            })
+	            
+	            renderHighChartConsistencyFinal($scope.consistencyDataAxis);
+	        });
+	        
+	        stompClient.subscribe('/dataquality/conformity', function (greeting) {
+	        	console.log(greeting);
+	        	
+	        	if($scope.conformityData.length > 10){
+	            	$scope.conformityData.shift();
+	            	$scope.conformityData.push(greeting.body);
+	            	
+	            }
+	            else{
+	            	$scope.conformityData.push(greeting.body);
+	            }
+	            $scope.accuracyDataAxis = {
+	        			total:[],
+	        			qualified:[]
+	        	}
+	            angular.forEach($scope.conformityData,function(data){
+	            	var parsedJson = JSON.parse(data);
+	            	 $scope.conformityDataAxis.total.push(parsedJson.totalRowCount);
+	            	 $scope.conformityDataAxis.qualified.push(parsedJson.qualifiedRowCount);
+	            })
+	            
+	            renderHighChartConformityFinal($scope.conformityDataAxis);
+	        });
+	        
+	        stompClient.subscribe('/dataquality/completness', function (greeting) {
+	        	console.log(greeting);
+	        	if($scope.completnessData.length > 10){
+	            	$scope.completnessData.shift();
+	            	$scope.completnessData.push(greeting.body);
+	            	
+	            }
+	            else{
+	            	$scope.completnessData.push(greeting.body);
+	            }
+	            $scope.completnessDataAxis = {
+	        			total:[],
+	        			qualified:[]
+	        	}
+	            angular.forEach($scope.completnessData,function(data){
+	            	var parsedJson = JSON.parse(data);
+	            	$scope.completnessDataAxis.total.push(parsedJson.totalRowCount);
+	            	$scope.completnessDataAxis.qualified.push(parsedJson.qualifiedRowCount);
+	            })
+	            
+	            renderHighChartCompletnessFinal($scope.completnessDataAxis);
 	        });
 	    });
 	}
 
+	
 	function disconnect() {
 	    if (stompClient !== null) {
 	        stompClient.disconnect();

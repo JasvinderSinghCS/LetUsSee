@@ -1,4 +1,4 @@
-package com.adqt.springservice.service;
+/*package com.adqt.springservice.service;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,7 +50,7 @@ public class PubSubPublisher {
 				ByteString data = ByteString.copyFromUtf8(message);
 				PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
 				ApiFuture<String> future = publisher.publish(pubsubMessage);
-				/*
+				
 				 * // add an asynchronous callback to handle success / failure
 				 * ApiFutures.addCallback(future, new ApiFutureCallback<String>() {
 				 * 
@@ -63,7 +63,7 @@ public class PubSubPublisher {
 				 * @Override public void onSuccess(String messageId) { // Once published,
 				 * returns server-assigned message ids (unique within the topic)
 				 * System.out.println(message + " :" + messageId); } });
-				 */
+				 
 			}
 		} finally {
 			if (publisher != null) {
@@ -72,8 +72,9 @@ public class PubSubPublisher {
 		}
 	}
 
-	/*public static void main(String... args) throws Exception {
+	public static void main(String... args) throws Exception {
 		publishMessages();
-	}*/
+	}
 
 }
+*/

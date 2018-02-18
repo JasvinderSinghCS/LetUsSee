@@ -9,6 +9,156 @@ $rootScope.selectedLink ="profiling";
 		$scope.selectedTab = value;
 	}
 	
+	
+	var renderHighChartAccuracy = function(){
+		
+		Highcharts.chart('container', {
+
+			  title: {
+			            text: 'Data Accuracy',
+			            x: -20 //center
+			        },
+			        xAxis: {
+			            categories: ['Jan', 'Feb', 'Mar']
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'Temperature (°C)'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Tokyo',
+			            data: [7.0, 6.9, 9.5]
+			        }]
+			});
+	}
+	
+	var renderHighChartConformity = function(){
+		
+		Highcharts.chart('conformity', {
+
+			  title: {
+			            text: 'Data Conformity',
+			            x: -20 //center
+			        },
+			        xAxis: {
+			            categories: ['Jan', 'Feb', 'Mar']
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'Temperature (°C)'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Tokyo',
+			            data: [7.0, 6.9, 9.5]
+			        }]
+			});
+	}
+
+	
+	var renderHighChartConsistency = function(){
+		
+		Highcharts.chart('consistency', {
+
+			  title: {
+			            text: 'Data Consistency',
+			            x: -20 //center
+			        },
+			        xAxis: {
+			            categories: ['Jan', 'Feb', 'Mar']
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'Temperature (°C)'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Tokyo',
+			            data: [7.0, 6.9, 9.5]
+			        }]
+			});
+	}
+
+	var renderHighChartCompletness = function(){
+		
+		Highcharts.chart('completness', {
+
+			  title: {
+			            text: 'Data Completness',
+			            x: -20 //center
+			        },
+			        xAxis: {
+			            categories: ['Jan', 'Feb', 'Mar']
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'Temperature (°C)'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: '°C'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: [{
+			            name: 'Tokyo',
+			            data: [7.0, 6.9, 9.5]
+			        }]
+			});
+	}
+
 	var render = function(){
 		
 		var data = {
@@ -66,6 +216,14 @@ $rootScope.selectedLink ="profiling";
 	
 	$scope.rerender =function(){
 		render();
+	}
+	
+	$scope.rerenderHighchart =function(){
+		renderHighChartCompletness();
+		renderHighChartConformity();
+		renderHighChartAccuracy();
+		renderHighChartConsistency();
+		
 	}
 	
 });

@@ -21,7 +21,7 @@ public class RuleValueController {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/app/ruleValue", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/api/ruleValue", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void saveValue(@RequestBody List<RuleValueDTO> ruleValueDTOList) {
 		ruleValueService.saveValue(ruleValueDTOList);
 	}

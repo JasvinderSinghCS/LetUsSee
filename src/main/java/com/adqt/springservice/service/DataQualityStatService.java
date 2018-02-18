@@ -3,6 +3,8 @@ package com.adqt.springservice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.adqt.springservice.dto.DataQualityStatDTO;
@@ -13,6 +15,14 @@ public class DataQualityStatService {
 
 	@Autowired
 	private ThreadPoolProviderService threadPoolProvider;
+
+	@Autowired
+	private SimpMessagingTemplate broker;
+
+	@Autowired
+	public DataQualityStatService(final SimpMessagingTemplate broker) {
+		this.broker = broker;
+	}
 	
 	public void lauchDataQuality(String tableName) {
 		launchDataAccuracy(tableName);
@@ -21,58 +31,43 @@ public class DataQualityStatService {
 		//launchDataConsistency(tableName);
 	}
 	
-	@MessageMapping("/accuracy")
-	@SendTo("/dataquality/accuracy")
-	public DataQualityStatDTO launchDataAccuracy(String tableName) {
-		while(true) {
-		 try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@Scheduled(fixedRate = 8000)
+	public void launchDataAccuracy(String tableName) {
 		DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 		dataQualityDTO.setTableName("accuracy");
 		dataQualityDTO.setQualifiedRowCount(47);
 		dataQualityDTO.setTotalRowCount(100);
-		return dataQualityDTO;		
-		}
+		broker.convertAndSend("/dataquality/accuracy", dataQualityDTO); ;		
 	}
 	
-	/*@MessageMapping("/completness")
+	@MessageMapping("/completness")
 	@SendTo("/dataquality/completness")
-	public void launchDataCompletenss(String tableName) {
-		while(true) {
+	public DataQualityStatDTO launchDataCompletenss(String tableName) {
 		DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 		dataQualityDTO.setTableName("completness");
 		dataQualityDTO.setQualifiedRowCount(47);
 		dataQualityDTO.setTotalRowCount(100);
 		return dataQualityDTO;		
-		}
 	}
 	
 	@MessageMapping("/conformity")
 	@SendTo("/dataquality/conformity")
-	public void launchDataConformity(String tableName) {
-		while(true) {
+	public DataQualityStatDTO launchDataConformity(String tableName) {
 		DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 		dataQualityDTO.setTableName("conformity");
 		dataQualityDTO.setQualifiedRowCount(47);
 		dataQualityDTO.setTotalRowCount(100);
-		return dataQualityDTO;
-		}
+		return dataQualityDTO;		
 	}
 	
 	@MessageMapping("/consistency")
 	@SendTo("/dataquality/consistency")
-	public void launchDataConsistency(String tableName) {
-		while(true) {
+	public DataQualityStatDTO launchDataConsistency(String tableName) {
 		DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 		dataQualityDTO.setTableName("consistency");
 		dataQualityDTO.setQualifiedRowCount(47);
 		dataQualityDTO.setTotalRowCount(100);
-		return dataQualityDTO;
-		}
-	}*/
+		return dataQualityDTO;		
+	}
 	
 }

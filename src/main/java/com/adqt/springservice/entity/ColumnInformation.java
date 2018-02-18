@@ -6,10 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 @Entity
 @javax.persistence.Table(name="column_info")
-public class ColumnInformation {
+public class ColumnInformation implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

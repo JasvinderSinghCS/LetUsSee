@@ -7,6 +7,9 @@ import java.io.FileReader;
 
 import javax.annotation.PostConstruct;
 
+import com.google.api.core.ApiFutureCallback;
+import com.google.api.core.ApiFutures;
+import com.google.api.gax.grpc.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,8 +22,7 @@ import com.google.pubsub.v1.TopicName;
 
 @Service
 public class PubSubPublisher {
-    /*
-    public static void publishMessages(String dataPath) throws Exception {
+    /*public static void publishMessages(String dataPath) throws Exception {
 
         TopicName topicName = TopicName.of("gcp-data-engineer-188205", "adqt");
         Publisher publisher = null;
@@ -65,6 +67,5 @@ public class PubSubPublisher {
         // "/home/amitashukla0906/LetUsSee/src/main/resources/EcommerceData.csv" 
         String filePath = args[0];
         publishMessages(filePath);
-    }
-*/
+    }*/
 }

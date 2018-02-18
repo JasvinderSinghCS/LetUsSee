@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
-			<version>1.23.0</version>
+			<version>1.22.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>guava-jdk5</artifactId>
@@ -146,6 +146,13 @@
 			<artifactId>gax</artifactId>
 			<version>1.4.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.beam</groupId>
+			<artifactId>beam-runners-google-cloud-dataflow-java</artifactId>
+			<version>2.2.0</version>
+			<scope>runtime</scope>
+		</dependency>
+
 
 	</dependencies>
 
@@ -164,7 +171,7 @@
 				<version>1.5.10.RELEASE</version>
         		<configuration>
           			<jvmArguments>
-            			-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
+            			-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006
           			</jvmArguments>
         		</configuration>
 			</plugin>

@@ -8,6 +8,8 @@ import com.google.cloud.dataflow.sdk.values.TupleTag;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollectionView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,8 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
 
     private final PCollectionView<ProfilingContext> profilingContext;
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     public ProfilingParDo(PCollectionView<ProfilingContext> profilingContext) {
         this.profilingContext = profilingContext;
     }
@@ -32,30 +36,30 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
         List<RuleValue> rules = localProfilingContext.getRules();
         String[] columns = row.split(",");
         TableRow tableRow = new TableRow();
+        tableRow.set("tablename", localProfilingContext.getTableName());
+        tableRow.set("row", row);
+        log.info("Row processing started {} with rule : {}",row,rules);
+        Boolean accStatus = true, conformStatus = true, completenessStatus=true, consistencyStatus=true;
         for (RuleValue rule : rules) {
-            tableRow.set("tablename", localProfilingContext.getTableName());
-            tableRow.set("row", rule.getRuleTypes());
+            log.info("Row processing started {} with rule {}",row,rule);
             ColumnInformation column = localProfilingContext.getSchema().getColumn(rule.getColumnIndex());
-            Boolean status = true;
             String data = columns[rule.getColumnIndex()];
             if (RuleTypeEnum.ACCURACY.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                status = interpretAccuracyRule(data, rule.getRuleValue(), rule.getDataType(), rule.getRuleKey());
-                tableRow.set("accuracy", status);
+                accStatus = interpretAccuracyRule(data, rule.getRuleValue(), rule.getDataType(), rule.getRuleKey());
             } else if (RuleTypeEnum.COMPLETNESS.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                tableRow.set("completeness", status);
-                status = interpretCompletenessRule(data, rule.getRuleKey());
+                completenessStatus = interpretCompletenessRule(data, rule.getRuleKey());
             } else if (RuleTypeEnum.CONFORMITY.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                tableRow.set("conformity", status);
-                status = interpretConformityRule(data, rule.getRuleValue(), rule.getRuleKey());
+                conformStatus = interpretConformityRule(data, rule.getRuleValue(), rule.getRuleKey());
             } else if (RuleTypeEnum.CONSISTENCY.toString().equalsIgnoreCase(rule.getRuleTypes())) {
-                tableRow.set("consistency", status);
-                status = interpretConsistencyRule(data, rule.getRuleValue(), rule.getRuleKey());
+                consistencyStatus = interpretConsistencyRule(data, rule.getRuleValue(), rule.getRuleKey());
             }
         }
-
+        tableRow.set("accuracy", accStatus);
+        tableRow.set("completeness", completenessStatus);
+        tableRow.set("conformity", conformStatus);
+        tableRow.set("consistency", consistencyStatus);
+        log.info("@@@@ TABLE ROW @@@@"+tableRow);
         c.output(tableRow);
-//        c.output(KV.of(localProfilingContext.getTableName(), Rows));
-
     }
 
     private Comparable castObject(String value, String dataType) {
@@ -64,6 +68,7 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
                 case "string":
                     return value;
                 case "integer":
+                    log.info("value : {}     datatype : {}",value,dataType);
                     return Integer.parseInt(value);
                 case "float":
                     return Float.parseFloat(value);
@@ -108,13 +113,13 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
         Comparable dataCom = castObject(data,dataType);
         if(dataCom==null) return false;
         if(rule.toUpperCase().trim().equals("GREATER")) {
-            Comparable ruleValCom = castObject(data, dataType);
+            Comparable ruleValCom = castObject(ruleValue, dataType);
             return dataCom.compareTo(ruleValCom) > 0;
         }else if(rule.toUpperCase().trim().equals("SMALLER")) {
-            Comparable ruleValCom = castObject(data, dataType);
+            Comparable ruleValCom = castObject(ruleValue, dataType);
             return dataCom.compareTo(ruleValCom) < 0;
         }else if(rule.toUpperCase().trim().equals("EQUAL")) {
-            Comparable ruleValCom = castObject(data, dataType);
+            Comparable ruleValCom = castObject(ruleValue, dataType);
             return dataCom.compareTo(ruleValCom) == 0;
         }else if(rule.toUpperCase().trim().equals("BETWEEN")) {
             String[] range = ruleValue.split(",");
@@ -124,7 +129,7 @@ public class ProfilingParDo extends DoFn<String, TableRow> {
         } else if(rule.toUpperCase().trim().equals("NOTEQUAL")) {
                 return data.compareTo(ruleValue) != 0;
         }else{
-                return false;
+                return true;
         }
     }
 }

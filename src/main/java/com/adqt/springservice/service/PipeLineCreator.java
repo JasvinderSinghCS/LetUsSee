@@ -5,6 +5,9 @@ import com.adqt.springservice.entity.RuleValue;
 import com.google.api.services.bigquery.model.TableFieldSchema;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.api.services.bigquery.model.TableSchema;
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.dataflow.sdk.values.TupleTag;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
@@ -27,6 +30,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,9 +43,9 @@ public class PipeLineCreator {
     @Autowired
     PropertyFileReader propertyFileReader;
 
-    public void preProcess(String tableName, Schema schema, List<RuleValue> rules) throws FileNotFoundException {
+    public void preProcess(String tableName, Schema schema, List<RuleValue> rules) throws IOException {
         //PelicanCluster targetCluster = getTargetCluster();
-        String[] args = new String[10];
+        String[] args = new String[7];
         args[0] = prepareArgument("tempLocation", propertyFileReader.getTempLocation());
         args[1] = prepareArgument("runner", propertyFileReader.getRunner());
         args[2] = prepareArgument("project", propertyFileReader.getProjectId());
@@ -49,21 +53,28 @@ public class PipeLineCreator {
         args[4] = prepareArgument("credentialPath", propertyFileReader.getOAuthPvtKeyPath());
         args[5] = prepareArgument("streaming", "true");
         args[6] = prepareArgument("zone", propertyFileReader.getZone());
-        args[7] = prepareArgument("autoscalingAlgorithm", "NONE");
+        //args[7] = prepareArgument("autoscalingAlgorithm", "NONE");
    /* args[8] = prepareArgument("numWorkers", ""+(Math.min(maxPipelineWorkers, Math.max(infoObjects.size()/8, minPipelineWorkers))));
     args[9] = prepareArgument("maxNumWorkers", ""+maxPipelineWorkers);*/
-        final PelicanPipelineOptions options = PipelineOptionsFactory.fromArgs(args).as(PelicanPipelineOptions.class);
+
+
+
+        for(int i=0;i<7;i++)
+        log.info("@@@ ARGS @@ {}",args[i]);
 
         PipelineOptionsFactory.register(PelicanPipelineOptions.class);
-
+        final PelicanPipelineOptions pipelineOptions = PipelineOptionsFactory.fromArgs(args).as(PelicanPipelineOptions.class);
+        File credentialsPath = new File(propertyFileReader.getOAuthPvtKeyPath());
         HashSet<String> scopeSet = new HashSet<>();
         scopeSet.add("https://www.googleapis.com/auth/cloud-platform");
         scopeSet.add("https://www.googleapis.com/auth/compute");
         scopeSet.add("https://www.googleapis.com/auth/compute.readonly");
         scopeSet.add("https://www.googleapis.com/auth/userinfo.email");
+        FileInputStream serviceAccountStream = new FileInputStream(credentialsPath);
+        Credentials credentials = ServiceAccountCredentials.fromStream(serviceAccountStream).createScoped(scopeSet);
+        pipelineOptions.setGcpCredential(credentials);
 
-
-        Pipeline p = Pipeline.create(options);
+        Pipeline p = Pipeline.create(pipelineOptions);
 
         // Hardcoded Topic value
         String topic = propertyFileReader.getTopic();
@@ -82,7 +93,8 @@ public class PipeLineCreator {
         TableSchema bQSchema = new TableSchema().setFields(fields);
 
         ProfilingContext profilingContext = new ProfilingContext(tableName,schema,rules);
-        
+        log.info("Pipeline started");
+
         final PCollectionView<ProfilingContext> transferContextView = p
                 .apply("DB Context SideInput", Create.of(profilingContext).withCoder(SerializableCoder.of(ProfilingContext.class)))
                 .apply(View.<ProfilingContext>asSingleton());
@@ -96,6 +108,7 @@ public class PipeLineCreator {
           .withWriteDisposition(BigQueryIO.Write.WriteDisposition.WRITE_APPEND)
           .withCreateDisposition(BigQueryIO.Write.CreateDisposition.CREATE_IF_NEEDED));
 
+        log.info("Pipeline Stopped");
         PipelineResult pipelineResult = p.run();
         }
 

@@ -96,7 +96,7 @@ public class DataQualityStatService {
 		log.info("fetch Accuracy count ");
 		String query = "select count(1) as row_count,accuracy from `let_us_see.ProfilingResult` group by tablename,accuracy";
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
-		while (true) {
+		continueLoop : while (true) {
 			Thread.sleep(30000);
 			log.info("new thread fetching count of accuracy");
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
@@ -123,8 +123,18 @@ public class DataQualityStatService {
 				if(null == fieldValueAccuracy) {
 					countMap.put(true,0l);
 				}else {
-				boolean status = fieldValueAccuracy.getBooleanValue();
-				countMap.put(status,rowCount);
+					try {
+						Boolean status = Boolean.valueOf(fieldValueAccuracy.getBooleanValue());
+						countMap.put(status, rowCount);
+					}catch (Exception e){
+						dataQualityDTO.setTableName("accuracy");
+						dataQualityDTO.setQualifiedRowCount(0);
+						dataQualityDTO.setTotalRowCount(0);
+						dataQualityDTO.setPercentage(0);
+						dataQualityDTO.setBelowThreshold(false);
+						broker.convertAndSend("/dataquality/accuracy", dataQualityDTO);
+						continue continueLoop;
+					}
 				}
 			}
 			long totalFinalCount = 0l;
@@ -157,7 +167,7 @@ public class DataQualityStatService {
 		String query = "select count(1) as row_count,completeness from `let_us_see.ProfilingResult` group by tablename,completeness";
 
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
-		while (true) {
+		continueLoop : while (true) {
 			Thread.sleep(30000);
 			
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
@@ -179,8 +189,18 @@ public class DataQualityStatService {
 				if(null == fieldValueAccuracy) {
 					countMap.put(true,0l);
 				}else {
-				boolean status = fieldValueAccuracy.getBooleanValue();
-				countMap.put(status,rowCount);
+					try {
+						Boolean status = Boolean.valueOf(fieldValueAccuracy.getBooleanValue());
+						countMap.put(status, rowCount);
+					}catch (Exception e){
+						dataQualityDTO.setTableName("completness");
+						dataQualityDTO.setQualifiedRowCount(0);
+						dataQualityDTO.setTotalRowCount(0);
+						dataQualityDTO.setPercentage(0);
+						dataQualityDTO.setBelowThreshold(false);
+						broker.convertAndSend("/dataquality/completness", dataQualityDTO);
+						continue continueLoop;
+					}
 				}
 			}
 			long totalFinalCount = 0l;
@@ -212,7 +232,7 @@ public class DataQualityStatService {
 		String query = "select count(1) as row_count,conformity from `let_us_see.ProfilingResult` group by tablename,conformity";
 
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
-		while (true) {
+		continueLoop : while (true) {
 			Thread.sleep(30000);
 			
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
@@ -234,8 +254,18 @@ public class DataQualityStatService {
 				if(null == fieldValueAccuracy) {
 					countMap.put(true,0l);
 				}else {
-				boolean status = fieldValueAccuracy.getBooleanValue();
-				countMap.put(status,rowCount);
+					try {
+						Boolean status = Boolean.valueOf(fieldValueAccuracy.getBooleanValue());
+						countMap.put(status, rowCount);
+					}catch (Exception e){
+						dataQualityDTO.setTableName("conformity");
+						dataQualityDTO.setQualifiedRowCount(0);
+						dataQualityDTO.setTotalRowCount(0);
+						dataQualityDTO.setPercentage(0);
+						dataQualityDTO.setBelowThreshold(false);
+						broker.convertAndSend("/dataquality/conformity", dataQualityDTO);
+						continue continueLoop;
+					}
 				}
 			}
 			long totalFinalCount = 0l;
@@ -266,7 +296,7 @@ public class DataQualityStatService {
 	public void launchDataConsistency(String tableName, BigQuery bigQueryClient) throws Exception {
 		String query = "select count(1) as row_count,consistency from `let_us_see.ProfilingResult` group by tablename,consistency";
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
-		while (true) {
+		continueLoop : while (true) {
 			Thread.sleep(30000);
 			
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
@@ -288,8 +318,18 @@ public class DataQualityStatService {
 				if(null == fieldValueAccuracy) {
 					countMap.put(true,0l);
 				}else {
-				boolean status = fieldValueAccuracy.getBooleanValue();
-				countMap.put(status,rowCount);
+					try {
+						Boolean status = Boolean.valueOf(fieldValueAccuracy.getBooleanValue());
+						countMap.put(status, rowCount);
+					}catch (Exception e){
+						dataQualityDTO.setTableName("consistency");
+						dataQualityDTO.setQualifiedRowCount(0);
+						dataQualityDTO.setTotalRowCount(0);
+						dataQualityDTO.setPercentage(0);
+						dataQualityDTO.setBelowThreshold(false);
+						broker.convertAndSend("/dataquality/consistency", dataQualityDTO);
+						continue continueLoop;
+					}
 				}
 			}
 			long totalFinalCount = 0l;

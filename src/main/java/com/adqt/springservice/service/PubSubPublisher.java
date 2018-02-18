@@ -62,7 +62,7 @@ public class PubSubPublisher {
     }
 
     public static void main(String... args) throws Exception {
-        // "/home/amitashukla0906/LetUsSee/src/main/resources/EcommerceData.csv"
+        // "/home/amitashukla0906/LetUsSee/src/main/resources/EcommerceData.csv" 
         String filePath = args[0];
         publishMessages(filePath);
     }

@@ -24,10 +24,16 @@ public class ProfilingExecutor {
     @Autowired
     TableRepository tableRepository;
 
+    
+    @Autowired
+    DataQualityStatService dataQualityStatService;
+
+
     public void executeProfiling(String tableName) throws FileNotFoundException {
         TableInformation table = tableRepository.findByTableName(tableName);
         List<RuleValue> rules = ruleValueRepository.findByTableName(tableName);
         Schema schema = new Schema(table.getColumnInformations());
+        dataQualityStatService.lauchDataQuality(tableName);
         pipeLineCreator.preProcess(tableName,schema,rules);
     }
 }

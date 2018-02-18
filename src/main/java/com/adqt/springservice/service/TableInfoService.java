@@ -34,6 +34,7 @@ public class TableInfoService {
 			ColumnInformation column = new ColumnInformation();
 			column.setColumnName(columnDTO.getColumnName());
 			column.setColumnIndex(index);
+			index++;
 			column.setDataType(columnDTO.getDataType());
 			column.setTableInformation(table);
 			columns.add(column);
@@ -41,6 +42,18 @@ public class TableInfoService {
 		table.setColumnInformations(columns);
 		tableRepository.save(table);
 		return getTableInfoToSend(table);
+	}
+	
+	public List<TableInfoDTO> getAllTable(){
+		List<TableInfoDTO> tableList = new ArrayList<>();
+		List<TableInformation> allTable = tableRepository.findAll();
+		for (TableInformation tableInfo:allTable){
+			TableInfoDTO tableDto = getTableInfoToSend(tableInfo);
+			tableList.add(tableDto);
+			
+		}
+		return tableList;
+		
 	}
 
 	private TableInfoDTO getTableInfoToSend(TableInformation table) {

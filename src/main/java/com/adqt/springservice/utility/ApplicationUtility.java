@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /**
- * @author prateek.mishra
+ * @author mudit.nagar
  * Static Utility Methods to convert password to MD5 for storing in backend database
  */
 public class ApplicationUtility {

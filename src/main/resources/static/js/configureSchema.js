@@ -11,6 +11,15 @@ webApp.controller('configureSchema', function($scope,service, $location,$rootSco
 		  $scope.pageNumber -= 1;
 	  }
 	  
+	  $scope.setpage= function(number){
+		  $scope.pageNumber = number;
+	  }
+	  
+	  $scope.getAllTable = function(){
+		  service.getAllTable().then(function(data){
+			  $scope.allTables = data.data;
+		  })
+	  }
 	  $scope.tableSchema ={
 			  tableName:"",
 			  columnInfoList:[{columnName:"",dataType:"STRING"}]
@@ -37,11 +46,42 @@ webApp.controller('configureSchema', function($scope,service, $location,$rootSco
 	
 	  $scope.saveNewSchema =function(schema){
 		  service.saveSchema(schema).then(function(data){
-			  $scope.recievedSchema= data;
+			  $scope.recievedSchema= data.data;
 			  $scope.visitNext();
 		  },function(error){
 			  console.log(error);
 		  })
 	  }
+	  
+	  $scope.getColumnName=function(columnList,columnId){
+		  
+		  var name="";
+		  angular.forEach(columnList,function(column){
+			  if(column.columnId == columnId){
+				  name = column.columnName;
+				  return name;
+			  }
+		  })
+		  return name;
+	  }
+	  
+	  $scope.saveMapping=function(ruleMappingList){
+		  
+		  angular.forEach(ruleMappingList,function(rule){
+			  rule.columnId = rule.columnId.columnId;
+		  })
+		  service.saveRuleMapping(ruleMappingList).then(function(data){
+			  $scope.visitNext();
+		  },function(error){
+			  
+		  });
+	  }
 
+	  $scope.startProfiling=function(tableName){
+		  service.startProfiling(tableName).then(function(data){
+			  $location.path('/profiling').replace();
+		  },function(error){
+			  $location.path('/profiling').replace();
+		  })
+	  }
 });

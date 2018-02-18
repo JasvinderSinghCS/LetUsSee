@@ -5,7 +5,7 @@
     <ul id="progressbar">
       <li style="padding-left:100px;" class="active">Schema Setup</li>
       <li style="padding-left:100px;" ng-class="{'active':pageNumber >= 2}">Rule Mapping</li>
-      <li style="padding-left:100px;" ng-class="{'active':pageNumber == 3}">Start Profiling</li>
+      <li style="padding-left:100px;" ng-class="{'active':pageNumber == 3}" ng-click="setpage(3);getAllTable()">Start Profiling</li>
     </ul>
     <!-- fieldsets -->
     <fieldset ng-show="pageNumber == 1">
@@ -38,25 +38,29 @@
       <div style="float:left;width:100%" ng-repeat="rule in ruleMappingList">
 
       		<select  style="width:30%;padding:5px" ng-model="rule.columnId"
-              ng-options="opt as opt.columnId for opt in recievedSchema.columnInfoList">
+              ng-options="opt as opt.columnName for opt in recievedSchema.columnInfoList" value="{{opt.columnId}}">
           	</select>
           	
           	<select  style="width:30%;padding:5px" ng-model="rule.ruleType"
               ng-options="opt as opt for opt in supportedRule">
           	</select>
           	
-      		<input style="width:30%;padding:5px" type="text" ng-model="rule.ruleExpresion" name="ruleExpresion" placeholder="Rule NLP Expresion" />
+      		<input style="width:30%;padding:5px" type="text" ng-model="rule.ruleExpression" name="ruleExpresion" placeholder="Rule NLP Expresion" />
           	
       	</div>
       		<input type="button" name="previous" class="previous action-button" value="Previous" ng-click="visitPrevious()" />
-      		<input type="submit" name="submit" class="submit action-button" value="Next" ng-click="visitNext();"/>
+      		<input type="submit" name="submit" class="submit action-button" value="Next" ng-click="saveMapping(ruleMappingList);getAllTable()"/>
     </fieldset>
     
     <fieldset ng-show="pageNumber == 3">
       <h2 class="fs-title">Start Profiling</h2>
-      <h3 class="fs-subtitle"><span style="color:gray;font-weight:bold;padding:2px">Table Name:</span>{{tableSchema.tableName}}</h3>
+      <h3 class="fs-subtitle"><span style="color:gray;font-weight:bold;padding:2px">Table Name:</span><span>
+      	<select  style="width:30%;padding:5px" ng-model="selectedTableForProfiling"
+              ng-options="opt as opt.tableName for opt in allTables">
+          	</select>
+      </span></h3>
       <img src="../images/start-profiling.gif" width="350" height="300"/>
-      <input type="submit" style="width:200px" name="submit" class="submit action-button" value="Start Profiling" />
+      <input type="submit" style="width:200px" name="submit" class="submit action-button" value="Start Profiling" ng-click="startProfiling(selectedTableForProfiling)" />
     </fieldset>
   </div>
 </form>

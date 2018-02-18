@@ -82,7 +82,7 @@ public class PipeLineCreator {
         TableSchema bQSchema = new TableSchema().setFields(fields);
 
         ProfilingContext profilingContext = new ProfilingContext(tableName,schema,rules);
-
+        
         final PCollectionView<ProfilingContext> transferContextView = p
                 .apply("DB Context SideInput", Create.of(profilingContext).withCoder(SerializableCoder.of(ProfilingContext.class)))
                 .apply(View.<ProfilingContext>asSingleton());

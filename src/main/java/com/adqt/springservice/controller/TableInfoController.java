@@ -1,5 +1,7 @@
 package com.adqt.springservice.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,12 @@ public class TableInfoController {
 	public TableInfoDTO saveAndGetTable(@RequestBody TableInfoDTO tableInfoDTO) {
 		
 		return tableInfoService.saveAndGetTable(tableInfoDTO);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/api/table", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<TableInfoDTO> getAllTable() {
+		
+		return tableInfoService.getAllTable();
 	}
 	
 }

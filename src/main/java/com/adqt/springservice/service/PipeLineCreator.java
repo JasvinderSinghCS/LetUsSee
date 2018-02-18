@@ -19,7 +19,10 @@ import org.apache.beam.sdk.values.PCollectionView;
 import org.apache.beam.sdk.values.TupleTagList;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +31,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+@Service
 public class PipeLineCreator {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     PropertyFileReader propertyFileReader;

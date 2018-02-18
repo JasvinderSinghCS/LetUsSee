@@ -25,3 +25,4 @@ search/
 .idea/
 ecat/metastore_db/
 *.iml
+.idea

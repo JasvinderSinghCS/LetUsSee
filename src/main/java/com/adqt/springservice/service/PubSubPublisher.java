@@ -33,7 +33,7 @@ public class PubSubPublisher {
                 ByteString data = ByteString.copyFromUtf8(message);
                 PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
                 ApiFuture<String> future = publisher.publish(pubsubMessage);
-                // add an asynchronous callback to handle success / failure
+                /*// add an asynchronous callback to handle success / failure
                 ApiFutures.addCallback(future, new ApiFutureCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
@@ -50,7 +50,7 @@ public class PubSubPublisher {
                         // Once published, returns server-assigned message ids (unique within the topic)
                         System.out.println(message + " :" + messageId);
                     }
-                });
+                });*/
             }
         } finally {
             if (publisher != null) {

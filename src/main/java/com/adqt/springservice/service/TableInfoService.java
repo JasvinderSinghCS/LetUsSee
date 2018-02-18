@@ -34,6 +34,7 @@ public class TableInfoService {
 			ColumnInformation column = new ColumnInformation();
 			column.setColumnName(columnDTO.getColumnName());
 			column.setColumnIndex(index);
+			index++;
 			column.setDataType(columnDTO.getDataType());
 			column.setTableInformation(table);
 			columns.add(column);

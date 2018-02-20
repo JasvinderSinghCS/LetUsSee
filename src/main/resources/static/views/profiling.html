@@ -1,7 +1,7 @@
 
-<div ng-show="profilingTableName">
+<div>
 <div class="black-background">
-	<div ng-if="profilingTableName" layout="row" style="width:100%;margin-top:10px">
+	<div  layout="row" style="width:100%;margin-top:10px">
 		<span style="color:white;font-size:16px;padding:10px;border:2px solid white;background-color:black;background-color: #3e3e40;;">
 				<span style="color:white;font-size:16px;"><img src="../images/table.png" width="20px" height="20px"/></span>	
 				<span style="color:white;font-size:16px;color:white">{{profilingTableName}}</span>	
@@ -79,7 +79,7 @@
 </div>
 
 <div ng-show="!profilingTableName">
-	<span>Please Run Profiling From Configuration</span>
+	
 </div>
 <style>
 .black-background{
@@ -869,6 +869,16 @@ input.highcharts-range-selector {
 svg{
 width:500px;
 height:350px;
+}
+
+.highcharts-color-1{
+    fill: #ef2717;
+    stroke: #c75c4c;
+}
+
+.highcharts-color-0 {
+    fill: #70dc59;
+    stroke: #45902b;
 }
 
 #circle { width: 18px; height: 18px; background: #01cc01; -moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px; }

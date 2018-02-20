@@ -1,5 +1,6 @@
 webApp.controller('configureSchema', function($scope,service, $location,$rootScope,service) {
 	
+	$scope.profilingCompleted = false;
 	$rootScope.selectedLink ="configure";
 	  $scope.pageNumber = 1;
 	  $scope.visitNext = function(){
@@ -77,13 +78,17 @@ webApp.controller('configureSchema', function($scope,service, $location,$rootSco
 	  }
 
 	  $scope.startProfiling=function(tableName){
+		  $scope.profilingCompleted = true;
 		  service.startProfiling(tableName.tableName).then(function(data){
 			  $rootScope.profilingTableName = tableName.tableName;
 			  $location.path('/profiling').replace();
+			  $scope.profilingCompleted = false;
+			  
 			  
 		  },function(error){
 			  $location.path('/profiling').replace();
 			  $rootScope.profilingTableName = tableName.tableName;
+			  $scope.profilingCompleted = false;
 		  })
 	  }
 });

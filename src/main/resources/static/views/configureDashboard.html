@@ -23,7 +23,7 @@
           	
       	</div>
       </div>
-      <input type="button" name="next" class="next action-button" value="Next" ng-click="saveNewSchema(tableSchema)"/>
+      <input type="button" ng-class="{'action-button-faded':!tableSchema.tableName}" name="next" ng-disabled="!tableSchema.tableName" class="next action-button" value="Next" ng-click="saveNewSchema(tableSchema)"/>
     </fieldset>
 
     <fieldset ng-show="pageNumber == 2">
@@ -56,11 +56,16 @@
       <h2 class="fs-title">Start Profiling</h2>
       <h3 class="fs-subtitle"><span style="color:gray;font-weight:bold;padding:2px">Table Name:</span><span>
       	<select  style="width:30%;padding:5px" ng-model="selectedTableForProfiling"
-              ng-options="opt as opt.tableName for opt in allTables">Please Select
+              ng-options="opt as opt.tableName for opt in allTables">
+              <option value="">Please select</option>
           	</select>
       </span></h3>
       <img src="../images/start-profiling.gif" width="350" height="300"/>
-      <input type="submit" style="width:200px" name="submit" class="submit action-button" value="Start Profiling" ng-click="startProfiling(selectedTableForProfiling)" />
+      <div>
+      <img ng-if="profilingCompleted" src="../images/loader.gif" width="150" height="80">
+      </div>
+      <input ng-if="!profilingCompleted" type="submit" style="width:200px" name="submit" class="submit action-button" value="Start Profiling" ng-click="startProfiling(selectedTableForProfiling)" />
+    	
     </fieldset>
   </div>
 </form>
@@ -212,5 +217,8 @@
     height: 100%;
     background: #1a1e217a;;
     padding: 25px;
+    }
+    .action-button-faded{
+        background: #86b59a !important;
     }
 </style>

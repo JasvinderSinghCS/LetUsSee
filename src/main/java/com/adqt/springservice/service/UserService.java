@@ -10,7 +10,6 @@ import com.adqt.springservice.repo.UserRepository;
 import com.adqt.springservice.utility.ApplicationUtility;
 
 /**
- * @author prateek.mishra
  * Service class performaing actual CRUD operations
  */
 @org.springframework.stereotype.Service

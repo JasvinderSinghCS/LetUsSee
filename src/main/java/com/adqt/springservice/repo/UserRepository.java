@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.adqt.springservice.entity.User;
 /**
- * @author prateek.mishra
  * Repository Interface for CRUD operations on User Table
  */
 

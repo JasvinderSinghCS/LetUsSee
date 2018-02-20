@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author prateek.mishra
  * Dto class for data transfer
  * Builder Pattern used
  */

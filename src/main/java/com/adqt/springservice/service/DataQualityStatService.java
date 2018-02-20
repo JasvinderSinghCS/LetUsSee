@@ -97,7 +97,7 @@ public class DataQualityStatService {
 		String query = "select count(1) as row_count,accuracy from `let_us_see.ProfilingResult` group by tablename,accuracy";
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
 		while (true) {
-			Thread.sleep(30000);
+			Thread.sleep(10000);
 			log.info("new thread fetching count of accuracy");
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 			JobId jobId = JobId.of(UUID.randomUUID().toString());
@@ -147,7 +147,7 @@ public class DataQualityStatService {
 			dataQualityDTO.setTableName("accuracy");
 			dataQualityDTO.setTotalRowCount(totalFinalCount);
 			dataQualityDTO.setQualifiedRowCount(totalQualifiedCount);
-			dataQualityDTO.setPercentage(totalFinalCount == 0l ? 0l : totalQualifiedCount/totalFinalCount);
+			dataQualityDTO.setPercentage(totalFinalCount == 0l ? 0d : (totalQualifiedCount*100/totalFinalCount));
 			dataQualityDTO.setBelowThreshold(dataQualityDTO.getPercentage() > percentageThreshold ? false : true);
 			broker.convertAndSend("/dataquality/accuracy", dataQualityDTO);
 		}
@@ -158,7 +158,7 @@ public class DataQualityStatService {
 
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
 		while (true) {
-			Thread.sleep(30000);
+			Thread.sleep(10000);
 			
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 			JobId jobId = JobId.of(UUID.randomUUID().toString());
@@ -202,7 +202,7 @@ public class DataQualityStatService {
 			dataQualityDTO.setTableName("completness");
 			dataQualityDTO.setQualifiedRowCount(totalQualifiedCount);
 			dataQualityDTO.setTotalRowCount(totalFinalCount);
-			dataQualityDTO.setPercentage(totalFinalCount == 0l ? 0l : totalQualifiedCount/totalFinalCount);
+			dataQualityDTO.setPercentage(totalFinalCount == 0l ? 0d : (totalQualifiedCount*100/totalFinalCount));
 			dataQualityDTO.setBelowThreshold(dataQualityDTO.getPercentage() > percentageThreshold ? false : true);
 			broker.convertAndSend("/dataquality/completness", dataQualityDTO);
 		}
@@ -213,7 +213,7 @@ public class DataQualityStatService {
 
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
 		while (true) {
-			Thread.sleep(30000);
+			Thread.sleep(10000);
 			
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 			JobId jobId = JobId.of(UUID.randomUUID().toString());
@@ -257,7 +257,7 @@ public class DataQualityStatService {
 			dataQualityDTO.setTableName("conformity");
 			dataQualityDTO.setQualifiedRowCount(totalQualifiedCount);
 			dataQualityDTO.setTotalRowCount(totalFinalCount);
-			dataQualityDTO.setPercentage(totalFinalCount == 0l ? 0l : totalQualifiedCount/totalFinalCount);
+			dataQualityDTO.setPercentage(totalFinalCount == 0l ? 0d : (totalQualifiedCount*100/totalFinalCount));
 			dataQualityDTO.setBelowThreshold(dataQualityDTO.getPercentage() > percentageThreshold ? false : true);
 			broker.convertAndSend("/dataquality/conformity", dataQualityDTO);
 		}
@@ -267,7 +267,7 @@ public class DataQualityStatService {
 		String query = "select count(1) as row_count,consistency from `let_us_see.ProfilingResult` group by tablename,consistency";
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).setUseLegacySql(false).build();
 		while (true) {
-			Thread.sleep(30000);
+			Thread.sleep(10000);
 			
 			DataQualityStatDTO dataQualityDTO = new DataQualityStatDTO();
 			JobId jobId = JobId.of(UUID.randomUUID().toString());
@@ -310,7 +310,7 @@ public class DataQualityStatService {
 			dataQualityDTO.setTableName("consistency");
 			dataQualityDTO.setQualifiedRowCount(totalQualifiedCount);
 			dataQualityDTO.setTotalRowCount(totalFinalCount);
-			dataQualityDTO.setPercentage(totalFinalCount == 0l ? 0l : totalQualifiedCount/totalFinalCount);
+			dataQualityDTO.setPercentage(totalFinalCount == 0l ? 0d : (totalQualifiedCount*100/totalFinalCount));
 			dataQualityDTO.setBelowThreshold(dataQualityDTO.getPercentage() > percentageThreshold ? false : true);
 			broker.convertAndSend("/dataquality/consistency", dataQualityDTO);
 		}

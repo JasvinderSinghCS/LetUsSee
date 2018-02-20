@@ -3,7 +3,6 @@ package com.adqt.springservice.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
- * @author prateek.mishra
  * Custom exception class for easier manipulations
  */
 public class ApplicationRuntimeException extends RuntimeException {

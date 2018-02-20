@@ -41,7 +41,7 @@ var renderHighChartCompletnessFinal = function(data){
 			            name: 'Total Count',
 			            data: data.total
 			        },{
-			            name: 'Final Count',
+			            name: 'Mishmatch Count',
 			            data: data.qualified
 			        }]
 			});
@@ -78,7 +78,7 @@ var renderHighChartConsistencyFinal = function(data){
 			            name: 'Total Count',
 			            data: data.total
 			        },{
-			            name: 'Final Count',
+			            name: 'Mismatch Count',
 			            data: data.qualified
 			        }]
 			});
@@ -116,7 +116,7 @@ var renderHighChartConformityFinal = function(data){
 			            name: 'Total Count',
 			            data: data.total
 			        },{
-			            name: 'Final Count',
+			            name: 'Mismatch Count',
 			            data: data.qualified
 			        }]
 			});
@@ -153,7 +153,7 @@ var renderHighChartAccuracyFinal = function(data){
 			            name: 'Total Count',
 			            data: data.total
 			        },{
-			            name: 'Final Count',
+			            name: 'Mismatch Count',
 			            data: data.qualified
 			        }]
 			});
@@ -173,11 +173,7 @@ var renderHighChartAccuracyFinal = function(data){
 			            title: {
 			                text: 'Count'
 			            },
-			            plotLines: [{
-			                value: 0,
-			                width: 1,
-			                color: '#808080'
-			            }]
+			            plotLines: []
 			        },
 			        tooltip: {
 			            valueSuffix: '°C'
@@ -189,10 +185,14 @@ var renderHighChartAccuracyFinal = function(data){
 			            borderWidth: 0
 			        },
 			        series: [{
+			        	
 			            name: 'Total Count',
+			            color: '#6ae1e4',
 			            data: [0,0,0,0]
 			        },{
-			            name: 'Final Count',
+			        	
+			            name: 'Mismatch Count',
+			            color: '#e4736a',
 			            data: [0,0,0,0]
 			        }]
 			});
@@ -232,7 +232,7 @@ var renderHighChartAccuracyFinal = function(data){
 			            name: 'Total Count',
 			            data: [0,0,0,0]
 			        },{
-			            name: 'Final Count',
+			            name: 'Mismatch Count',
 			            data: [0,0,0,0]
 			        }]
 			});
@@ -309,7 +309,7 @@ var renderHighChartAccuracyFinal = function(data){
 			            name: 'Total Count',
 			            data: [0,0,0,0]
 			        },{
-			            name: 'Final Count',
+			            name: 'Mismatch Count',
 			            data: [0,0,0,0]
 			        }]
 			});
@@ -321,7 +321,7 @@ var renderHighChartAccuracyFinal = function(data){
 	
 	
 var renderHighChartAccuracyPer = function(perdata){
-		
+		console.log(perdata);
 		Highcharts.chart('container_per', {
 
 			  title: {
@@ -487,10 +487,9 @@ var renderHighChartAccuracyPer = function(perdata){
 		}
 		return arr;
 	}
-	if($rootScope.profilingTableName){
+	
 		setTimeout($scope.rerenderHighchart(),1000);
 		setTimeout($scope.rerenderHighchart(),5000);
-	}
 	
 	
 	
@@ -505,7 +504,8 @@ var renderHighChartAccuracyPer = function(perdata){
 	$scope.accuracyDataAxis = {
 			total:[],
 			qualified:[],
-			percentage:[]
+			percentage:[],
+			belowThreshold:false
 	}
 	$scope.consistencyData = [];
 	$scope.consistencyDataAxis = {
@@ -546,16 +546,18 @@ var renderHighChartAccuracyPer = function(perdata){
 	            }
 	            $scope.accuracyDataAxis = {
 	        			total:[],
-	        			qualified:[]
+	        			qualified:[],
+	        			percentage:[]
 	        	}
 	            angular.forEach($scope.accuracyData,function(data){
 	            	var parsedJson = JSON.parse(data);
 	            	 $scope.accuracyDataAxis.total.push(parsedJson.totalRowCount);
 	            	 $scope.accuracyDataAxis.qualified.push(parsedJson.qualifiedRowCount);
-	            	 $scope.accuracyDataAxis.qualified.push(parsedJson.percentage);
+	            	 $scope.accuracyDataAxis.percentage.push(parseInt(parsedJson.percentage));
 	            })
 	            
 	            renderHighChartAccuracyFinal($scope.accuracyDataAxis);
+	            
 	            renderHighChartAccuracyPer($scope.accuracyDataAxis.percentage)
 	            
 	        });
@@ -573,13 +575,14 @@ var renderHighChartAccuracyPer = function(perdata){
 	            }
 	            $scope.accuracyDataAxis = {
 	        			total:[],
-	        			qualified:[]
+	        			qualified:[],
+	        			percentage:[]
 	        	}
 	            angular.forEach($scope.consistencyData,function(data){
 	            	var parsedJson = JSON.parse(data);
 	            	 $scope.consistencyDataAxis.total.push(parsedJson.totalRowCount);
 	            	 $scope.consistencyDataAxis.qualified.push(parsedJson.qualifiedRowCount);
-	            	 $scope.consistencyDataAxis.qualified.push(parsedJson.percentage);
+	            	 $scope.consistencyDataAxis.percentage.push(parseInt(parsedJson.percentage));
 	            })
 	            
 	            renderHighChartConsistencyFinal($scope.consistencyDataAxis);
@@ -600,13 +603,14 @@ var renderHighChartAccuracyPer = function(perdata){
 	            }
 	            $scope.accuracyDataAxis = {
 	        			total:[],
-	        			qualified:[]
+	        			qualified:[],
+	        			percentage:[]
 	        	}
 	            angular.forEach($scope.conformityData,function(data){
 	            	var parsedJson = JSON.parse(data);
 	            	 $scope.conformityDataAxis.total.push(parsedJson.totalRowCount);
 	            	 $scope.conformityDataAxis.qualified.push(parsedJson.qualifiedRowCount);
-	            	 $scope.conformityDataAxis.qualified.push(parsedJson.percentage);
+	            	 $scope.conformityDataAxis.percentage.push(parseInt(parsedJson.percentage));
 	            })
 	            
 	            renderHighChartConformityFinal($scope.conformityDataAxis);
@@ -625,13 +629,14 @@ var renderHighChartAccuracyPer = function(perdata){
 	            }
 	            $scope.completnessDataAxis = {
 	        			total:[],
-	        			qualified:[]
+	        			qualified:[],
+	        			percentage:[]
 	        	}
 	            angular.forEach($scope.completnessData,function(data){
 	            	var parsedJson = JSON.parse(data);
 	            	$scope.completnessDataAxis.total.push(parsedJson.totalRowCount);
 	            	$scope.completnessDataAxis.qualified.push(parsedJson.qualifiedRowCount);
-	            	$scope.completnessDataAxis.qualified.push(parsedJson.percentage);
+	            	$scope.completnessDataAxis.percentage.push(parseInt(parsedJson.percentage));
 	            })
 	            
 	            renderHighChartCompletnessFinal($scope.completnessDataAxis);

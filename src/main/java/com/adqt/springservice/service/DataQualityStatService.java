@@ -123,8 +123,18 @@ public class DataQualityStatService {
 				if(null == fieldValueAccuracy) {
 					countMap.put(true,0l);
 				}else {
-				boolean status = fieldValueAccuracy.getBooleanValue();
-				countMap.put(status,rowCount);
+					try {
+						Boolean status = Boolean.valueOf(fieldValueAccuracy.getBooleanValue());
+						countMap.put(status, rowCount);
+					}catch (Exception e){
+						dataQualityDTO.setTableName("accuracy");
+						dataQualityDTO.setQualifiedRowCount(0);
+						dataQualityDTO.setTotalRowCount(0);
+						dataQualityDTO.setPercentage(0);
+						dataQualityDTO.setBelowThreshold(false);
+						broker.convertAndSend("/dataquality/accuracy", dataQualityDTO);
+						continue continueLoop;
+					}
 				}
 			}
 			long totalFinalCount = 0l;
@@ -179,8 +189,18 @@ public class DataQualityStatService {
 				if(null == fieldValueAccuracy) {
 					countMap.put(true,0l);
 				}else {
-				boolean status = fieldValueAccuracy.getBooleanValue();
-				countMap.put(status,rowCount);
+					try {
+						Boolean status = Boolean.valueOf(fieldValueAccuracy.getBooleanValue());
+						countMap.put(status, rowCount);
+					}catch (Exception e){
+						dataQualityDTO.setTableName("completness");
+						dataQualityDTO.setQualifiedRowCount(0);
+						dataQualityDTO.setTotalRowCount(0);
+						dataQualityDTO.setPercentage(0);
+						dataQualityDTO.setBelowThreshold(false);
+						broker.convertAndSend("/dataquality/completness", dataQualityDTO);
+						continue continueLoop;
+					}
 				}
 			}
 			long totalFinalCount = 0l;
@@ -234,8 +254,18 @@ public class DataQualityStatService {
 				if(null == fieldValueAccuracy) {
 					countMap.put(true,0l);
 				}else {
-				boolean status = fieldValueAccuracy.getBooleanValue();
-				countMap.put(status,rowCount);
+					try {
+						Boolean status = Boolean.valueOf(fieldValueAccuracy.getBooleanValue());
+						countMap.put(status, rowCount);
+					}catch (Exception e){
+						dataQualityDTO.setTableName("conformity");
+						dataQualityDTO.setQualifiedRowCount(0);
+						dataQualityDTO.setTotalRowCount(0);
+						dataQualityDTO.setPercentage(0);
+						dataQualityDTO.setBelowThreshold(false);
+						broker.convertAndSend("/dataquality/conformity", dataQualityDTO);
+						continue continueLoop;
+					}
 				}
 			}
 			long totalFinalCount = 0l;
@@ -288,8 +318,18 @@ public class DataQualityStatService {
 				if(null == fieldValueAccuracy) {
 					countMap.put(true,0l);
 				}else {
-				boolean status = fieldValueAccuracy.getBooleanValue();
-				countMap.put(status,rowCount);
+					try {
+						Boolean status = Boolean.valueOf(fieldValueAccuracy.getBooleanValue());
+						countMap.put(status, rowCount);
+					}catch (Exception e){
+						dataQualityDTO.setTableName("consistency");
+						dataQualityDTO.setQualifiedRowCount(0);
+						dataQualityDTO.setTotalRowCount(0);
+						dataQualityDTO.setPercentage(0);
+						dataQualityDTO.setBelowThreshold(false);
+						broker.convertAndSend("/dataquality/consistency", dataQualityDTO);
+						continue continueLoop;
+					}
 				}
 			}
 			long totalFinalCount = 0l;
